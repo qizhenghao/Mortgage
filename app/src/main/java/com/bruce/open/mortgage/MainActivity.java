@@ -74,8 +74,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mortgageTypeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.mortgage_type_business_rb) {
-                    
+                if (checkedId == R.id.mortgage_type_housing_fund_rb) {
+                    rateSp.setAdapter(housingRateAdapter);
+                    for (int i=0;i<housingRateArr.length;i++) {
+                        if (housingRateArr[i]==NORMAL_HOUSING_RATE) {
+                            rateSp.setSelection(i);
+                        }
+                    }
+                } else if (checkedId == R.id.mortgage_type_business_rb) {
+                    rateSp.setAdapter(bussRateAdapter);
+                    for (int i=0;i<bussRateArr.length;i++) {
+                        if (bussRateArr[i]==NORMAL_BUSINESS_RATE) {
+                            rateSp.setSelection(i);
+                        }
+                    }
                 }
             }
         });
