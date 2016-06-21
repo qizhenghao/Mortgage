@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.bruce.open.mortgage.customViews.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -113,7 +113,7 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -126,6 +126,8 @@
                     <EditText
                         android:id="@+id/calculate_unit_price_et"
                         android:inputType="numberDecimal"
+                        android:gravity="center"
+                        android:maxLength="9"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"/>
 
@@ -137,7 +139,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -150,6 +152,8 @@
                     <EditText
                         android:id="@+id/calculate_area_et"
                         android:layout_width="100dp"
+                        android:gravity="center"
+                        android:maxLength="5"
                         android:inputType="numberDecimal"
                         android:layout_height="wrap_content"/>
 
@@ -185,7 +189,7 @@
             android:visibility="gone"
             android:id="@+id/calculate_type_sum_layout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -198,6 +202,7 @@
             <EditText
                 android:id="@+id/calculate_sum_price_et"
                 android:layout_width="100dp"
+                android:gravity="center"
                 android:inputType="numberDecimal"
                 android:layout_height="wrap_content"/>
 
@@ -289,14 +294,14 @@
                 android:paddingBottom="1dp">
 
                 <RadioButton
-                    android:id="@+id/repayment_type_corpus_rb"
+                    android:id="@+id/repayment_type_interest_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="等额本息"/>
 
                 <RadioButton
-                    android:id="@+id/repayment_type_interest_rb"
+                    android:id="@+id/repayment_type_corpus_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="等额本金"/>
@@ -348,7 +353,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_height="36dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -357,7 +362,8 @@
                     android:text="房款总额："/>
                 <EditText
                     android:id="@+id/result_sum_price_edit"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
+                    android:gravity="center"
                     android:editable="false"
                     android:layout_height="wrap_content"/>
                 <TextView
@@ -370,7 +376,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_height="36dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -379,8 +385,9 @@
                     android:text="贷款总额："/>
                 <EditText
                     android:id="@+id/result_sum_loan_edit"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:editable="false"
+                    android:gravity="center"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:text="元"
@@ -392,7 +399,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_height="36dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -401,8 +408,9 @@
                     android:text="还款总额："/>
                 <EditText
                     android:id="@+id/result_repayment_sum_price_edit"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:editable="false"
+                    android:gravity="center"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:text="元"
@@ -414,7 +422,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_height="36dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -423,8 +431,9 @@
                     android:text="支付利息："/>
                 <EditText
                     android:id="@+id/result_sum_interest_edit"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:editable="false"
+                    android:gravity="center"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:text="元"
@@ -436,7 +445,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_height="36dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -445,8 +454,9 @@
                     android:text="首期付款："/>
                 <EditText
                     android:id="@+id/result_fisrt_payment_price_edit"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:editable="false"
+                    android:gravity="center"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:text="元"
@@ -458,7 +468,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_height="36dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -467,20 +477,22 @@
                     android:text="贷款月数："/>
                 <EditText
                     android:id="@+id/result_sum_month_edit"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:editable="false"
+                    android:gravity="center"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:text="元"
+                    android:text="月"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/equal_interest_every_month_pay_layout"
                 android:layout_marginLeft="40dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_height="36dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -489,14 +501,21 @@
                     android:text="每月还款："/>
                 <EditText
                     android:id="@+id/result_every_month_payment_edit"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:editable="false"
+                    android:gravity="center"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:text="元"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+
+            <!--<TextView-->
+                <!--android:id="@+id/equal_corpus_every_month_pay_tv"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"/>-->
             <TextView
                 android:text="*以上结果仅供参考"
                 android:layout_marginTop="10dp"
@@ -506,4 +525,4 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</com.bruce.open.mortgage.customViews.CustomScrollView>

@@ -2,17 +2,27 @@ package com.bruce.open.mortgage;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.bruce.open.mortgage.IPayStrategy.EqualCorpusStrategy;
+import com.bruce.open.mortgage.IPayStrategy.EqualInterestStrategy;
+import com.bruce.open.mortgage.IPayStrategy.PayContext;
+import com.bruce.open.mortgage.Model.PayResult;
 import com.bruce.open.mortgage.adapter.BaseSpinnerAdapter;
+import com.bruce.open.mortgage.customViews.CustomScrollView;
 
-public class MainActivity extends AppCompatActivity {
+import java.text.DecimalFormat;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final float NORMAL_BUSINESS_RATE = 4.90f;
     public static final float NORMAL_HOUSING_RATE = 3.25f;
@@ -20,20 +30,20 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup mortgageTypeRG;
     private RadioGroup calculateTypeRG;
     private EditText unitPriceEdit;
-    private EditText sumAreaEdit;
-    private Spinner firstPaymentSp;
-    private EditText sumMortgageEdit;
+    private EditText areaEdit;
+    private Spinner firstPaySp;
+    private EditText sumLoanEdit;
 
-    private Spinner mortgageYearSp;
-    private Spinner mortgageRateSp;
+    private Spinner yearSp;
+    private Spinner rateSp;
 
-    private RadioGroup repaymentTypeRG;
+    private RadioGroup payTypeRG;
 
     private Button calculateBtn;
     private Button refillBtn;
 
     private EditText resSumPriceEdit;
-    private EditText resSumMortgageEdit;
+    private EditText resSumLoanEdit;
     private EditText resSumPaymentEdit;
     private EditText resSumInterestEdit;
     private EditText resfirstPaymentEdit;
@@ -65,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.mortgage_type_business_rb) {
-
+                    
                 }
             }
         });
@@ -73,14 +83,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.calculate_type_sum_mortgage_rb) {
-                    findViewById(R.id.calculate_type_unit_layout).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.calculate_type_unit_layout).setVisibility(View.GONE);
                     findViewById(R.id.calculate_type_sum_layout).setVisibility(View.VISIBLE);
                 } else {
                     findViewById(R.id.calculate_type_unit_layout).setVisibility(View.VISIBLE);
-                    findViewById(R.id.calculate_type_sum_layout).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.calculate_type_sum_layout).setVisibility(View.GONE);
                 }
             }
         });
+        findViewById(R.id.calculate_btn).setOnClickListener(this);
+        findViewById(R.id.fill_again_btn).setOnClickListener(this);
     }
 
     private void initData() {
@@ -88,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
         yearAdapter = new BaseSpinnerAdapter(MainActivity.this, BaseSpinnerAdapter.YEAR, yearArr);
         bussRateAdapter = new BaseSpinnerAdapter(MainActivity.this, BaseSpinnerAdapter.BUSSINESS_RATE, bussRateArr);
         housingRateAdapter = new BaseSpinnerAdapter(MainActivity.this, BaseSpinnerAdapter.HOUSING_RATE, housingRateArr);
-        firstPaymentSp.setAdapter(firstPayAdapter);
-        mortgageYearSp.setAdapter(yearAdapter);
-        mortgageRateSp.setAdapter(bussRateAdapter);
-        firstPaymentSp.setSelection(3);
-        mortgageYearSp.setSelection(30-1);
+        firstPaySp.setAdapter(firstPayAdapter);
+        yearSp.setAdapter(yearAdapter);
+        rateSp.setAdapter(bussRateAdapter);
+        firstPaySp.setSelection(3);
+        yearSp.setSelection(30 - 1);
         for (int i=0;i<bussRateArr.length;i++) {
             if (bussRateArr[i]==NORMAL_BUSINESS_RATE) {
-                mortgageRateSp.setSelection(i);
+                rateSp.setSelection(i);
             }
         }
     }
@@ -104,16 +116,16 @@ public class MainActivity extends AppCompatActivity {
         mortgageTypeRG = (RadioGroup) findViewById(R.id.mortgage_type_rg);
         calculateTypeRG = (RadioGroup) findViewById(R.id.calculate_type_rg);
         unitPriceEdit = (EditText) findViewById(R.id.calculate_unit_price_et);
-        sumAreaEdit = (EditText) findViewById(R.id.calculate_area_et);
-        firstPaymentSp = (Spinner) findViewById(R.id.calculate_unit_price_payment_ratio_spinner);
-        sumMortgageEdit = (EditText) findViewById(R.id.calculate_sum_price_et);
-        mortgageYearSp = (Spinner) findViewById(R.id.mortgage_year_spinner);
-        mortgageRateSp = (Spinner) findViewById(R.id.mortgage_rate_spinner);
-        repaymentTypeRG = (RadioGroup) findViewById(R.id.repayment_type_rg);
+        areaEdit = (EditText) findViewById(R.id.calculate_area_et);
+        firstPaySp = (Spinner) findViewById(R.id.calculate_unit_price_payment_ratio_spinner);
+        sumLoanEdit = (EditText) findViewById(R.id.calculate_sum_price_et);
+        yearSp = (Spinner) findViewById(R.id.mortgage_year_spinner);
+        rateSp = (Spinner) findViewById(R.id.mortgage_rate_spinner);
+        payTypeRG = (RadioGroup) findViewById(R.id.repayment_type_rg);
         calculateBtn = (Button) findViewById(R.id.calculate_btn);
         refillBtn = (Button) findViewById(R.id.fill_again_btn);
         resSumPriceEdit = (EditText) findViewById(R.id.result_sum_price_edit);
-        resSumMortgageEdit = (EditText) findViewById(R.id.result_sum_loan_edit);
+        resSumLoanEdit = (EditText) findViewById(R.id.result_sum_loan_edit);
         resSumPaymentEdit = (EditText) findViewById(R.id.result_repayment_sum_price_edit);
         resSumInterestEdit = (EditText) findViewById(R.id.result_sum_interest_edit);
         resfirstPaymentEdit = (EditText) findViewById(R.id.result_fisrt_payment_price_edit);
@@ -142,4 +154,83 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.calculate_btn:
+
+                double unitPrice = 0, area = 0, sumLoan = 0;
+                if (calculateTypeRG.getCheckedRadioButtonId() == R.id.calculate_type_sum_mortgage_rb) {
+                    sumLoan = Double.parseDouble("".equals(sumLoanEdit.getText().toString().trim()) ? "0" : sumLoanEdit.getText().toString().trim());
+                    if (sumLoan < 1) {
+                        Toast.makeText(MainActivity.this, "贷款总额不能小于1万", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    sumLoan *= 10000;
+                } else {
+                    unitPrice = Double.parseDouble("".equals(unitPriceEdit.getText().toString().trim())?"0":unitPriceEdit.getText().toString().trim());
+                    area = Double.parseDouble("".equals(areaEdit.getText().toString().trim())?"0": areaEdit.getText().toString().trim());
+                }
+
+                double firstPay = firstPaySp.getSelectedItemPosition()/10d;
+
+                int year = yearSp.getSelectedItemPosition()+1;
+
+                double rate = NORMAL_BUSINESS_RATE;
+                switch (mortgageTypeRG.getCheckedRadioButtonId()) {
+                    case R.id.mortgage_type_business_rb:
+                        rate = bussRateArr[rateSp.getSelectedItemPosition()];
+                        break;
+                    case R.id.mortgage_type_housing_fund_rb:
+                        rate = housingRateArr[rateSp.getSelectedItemPosition()];
+                        break;
+                    case R.id.mortgage_type_combine_rb:
+
+                        break;
+                    default:
+                        Toast.makeText(MainActivity.this, "出错", Toast.LENGTH_SHORT).show();
+                        return;
+                }
+                rate /= 100d;
+
+                PayContext context = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumLoan, firstPay, year, rate) : new EqualCorpusStrategy(unitPrice, area, sumLoan, firstPay, year, rate));
+                PayResult result = context.operate();
+                setResultViewData(result);
+                break;
+            case R.id.fill_again_btn:
+                unitPriceEdit.setText("");
+                areaEdit.setText("");
+                sumLoanEdit.setText("");
+                break;
+        }
+    }
+
+    private void setResultViewData(PayResult result) {
+        resSumPriceEdit.setText(result.sumPrice == 0 ? "0" : new DecimalFormat("#.00").format(result.sumPrice));
+        resSumLoanEdit.setText(result.sumLoan==0?"0":new DecimalFormat("#.00").format(result.sumLoan));
+        resSumPaymentEdit.setText(result.sumPayPrice==0?"0":new DecimalFormat("#.00").format(result.sumPayPrice));
+        resSumInterestEdit.setText(result.sumInterest==0?"0":new DecimalFormat("#.00").format(result.sumInterest));
+        resfirstPaymentEdit.setText(result.firstPay==0?"0":new DecimalFormat("#.00").format(result.firstPay));
+        resSumMonthEdit.setText(result.monthCount==0?"0":new DecimalFormat("#.00").format(result.monthCount));
+        if (payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb) {
+            resEveryMonthPaymentEdit.setText(result.everyMonthPay==0?"0":new DecimalFormat("#.00").format(result.everyMonthPay));
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentEdit.getLayoutParams();
+            params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            resEveryMonthPaymentEdit.setLayoutParams(params);
+            CustomScrollView.IS_INTERCEPT = false;
+        } else {
+            CustomScrollView.IS_INTERCEPT = true;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < result.everyMonthPayArr.length; i++) {
+                sb.append("第" + (i+1) + "月，" + new DecimalFormat("#.00").format(result.everyMonthPayArr[i]) + "\n");
+            }
+            resEveryMonthPaymentEdit.setText(sb.toString());
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentEdit.getLayoutParams();
+            params.height = 600;
+            resEveryMonthPaymentEdit.setLayoutParams(params);
+        }
+    }
+
+
 }
