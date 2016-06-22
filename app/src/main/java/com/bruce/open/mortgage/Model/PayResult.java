@@ -25,4 +25,16 @@ public class PayResult {
 
     public double[] everyMonthPayArr;
 
+    public PayResult add(PayResult origin) {
+        this.sumLoan += origin.sumLoan;
+        this.sumPayPrice += origin.sumPayPrice;
+        this.sumInterest += origin.sumInterest;
+        this.everyMonthPay += origin.everyMonthPay;
+        if (everyMonthPayArr != null)
+            for (int i=0;i<everyMonthPayArr.length;i++) {
+                this.everyMonthPayArr[i] += origin.everyMonthPayArr[i];
+            }
+        return this;
+    }
+
 }

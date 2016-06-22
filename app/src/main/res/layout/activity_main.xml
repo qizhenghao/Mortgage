@@ -64,6 +64,61 @@
             android:background="#5bf27f"/>
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/calculate_type_combine_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商业贷："/>
+
+                <EditText
+                    android:id="@+id/calculate_type_combine_buss_et"
+                    android:layout_width="100dp"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="万元"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="公积金："/>
+
+                <EditText
+                    android:id="@+id/calculate_type_combine_housing_et"
+                    android:layout_width="100dp"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="万元"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/calculate_type_no_combine_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -245,6 +300,7 @@
             android:background="#5bf27f"/>
 
         <RelativeLayout
+            android:id="@+id/buss_rate_layout"
             android:layout_width="match_parent"
             android:layout_height="40dp">
 
@@ -254,7 +310,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:textStyle="bold"
-                android:text="贷款利率："/>
+                android:text="商业贷利率："/>
 
             <Spinner
                 android:id="@+id/mortgage_rate_spinner"
@@ -262,6 +318,29 @@
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/mortgage_rate_tv">
+            </Spinner>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/housing_rate_layout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/housing_rate_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:text="公积金利率："/>
+
+            <Spinner
+                android:id="@+id/housing_rate_spinner"
+                android:layout_width="180dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/housing_rate_tv">
             </Spinner>
         </RelativeLayout>
 
