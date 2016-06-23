@@ -1,10 +1,12 @@
 package com.bruce.open.mortgage;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,6 +18,7 @@ import com.bruce.open.mortgage.IPayStrategy.EqualCorpusStrategy;
 import com.bruce.open.mortgage.IPayStrategy.EqualInterestStrategy;
 import com.bruce.open.mortgage.IPayStrategy.PayContext;
 import com.bruce.open.mortgage.Model.PayResult;
+import com.bruce.open.mortgage.Utils.SettingManager;
 import com.bruce.open.mortgage.adapter.BaseSpinnerAdapter;
 import com.bruce.open.mortgage.customViews.CustomScrollView;
 
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final float NORMAL_BUSINESS_RATE = 4.90f;
     public static final float NORMAL_HOUSING_RATE = 3.25f;
+    public static final float DEFAULT_FIRST_PAY = 3;
+    public static final float DEFAULT_YEAR = 30;
 
     private RadioGroup mortgageTypeRG;
     private RadioGroup calculateTypeRG;
@@ -82,14 +87,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         findViewById(R.id.calculate_type_combine_layout).setVisibility(View.GONE);
                         findViewById(R.id.housing_rate_layout).setVisibility(View.VISIBLE);
                         findViewById(R.id.buss_rate_layout).setVisibility(View.GONE);
-                        findViewById(R.id.calculate_type_sum_layout).setVisibility(calculateTypeRG.getCheckedRadioButtonId()==R.id.calculate_type_sum_mortgage_rb?View.VISIBLE:View.GONE);
+                        findViewById(R.id.calculate_type_sum_layout).setVisibility(calculateTypeRG.getCheckedRadioButtonId() == R.id.calculate_type_sum_mortgage_rb ? View.VISIBLE : View.GONE);
                         break;
                     case R.id.mortgage_type_business_rb:
                         findViewById(R.id.housing_rate_layout).setVisibility(View.GONE);
                         findViewById(R.id.buss_rate_layout).setVisibility(View.VISIBLE);
                         findViewById(R.id.calculate_type_no_combine_layout).setVisibility(View.VISIBLE);
                         findViewById(R.id.calculate_type_combine_layout).setVisibility(View.GONE);
-                        findViewById(R.id.calculate_type_sum_layout).setVisibility(calculateTypeRG.getCheckedRadioButtonId()==R.id.calculate_type_sum_mortgage_rb?View.VISIBLE:View.GONE);
+                        findViewById(R.id.calculate_type_sum_layout).setVisibility(calculateTypeRG.getCheckedRadioButtonId() == R.id.calculate_type_sum_mortgage_rb ? View.VISIBLE : View.GONE);
                         break;
                     case R.id.mortgage_type_combine_rb:
                         findViewById(R.id.calculate_type_no_combine_layout).setVisibility(View.GONE);
@@ -118,28 +123,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initData() {
+        SettingManager settingManager = SettingManager.getInstance();
+        mortgageTypeRG.check(settingManager.getLoanType());
+        calculateTypeRG.check(settingManager.getCalculateType());
+        payTypeRG.check(settingManager.getPayType());
+
         firstPayAdapter = new BaseSpinnerAdapter(MainActivity.this, BaseSpinnerAdapter.FIRST_PAYMENT, firstPayArr);
         yearAdapter = new BaseSpinnerAdapter(MainActivity.this, BaseSpinnerAdapter.YEAR, yearArr);
         bussRateAdapter = new BaseSpinnerAdapter(MainActivity.this, BaseSpinnerAdapter.BUSSINESS_RATE, bussRateArr);
         housingRateAdapter = new BaseSpinnerAdapter(MainActivity.this, BaseSpinnerAdapter.HOUSING_RATE, housingRateArr);
 
         firstPaySp.setAdapter(firstPayAdapter);
-        firstPaySp.setSelection(3);
+        firstPaySp.setSelection((int) settingManager.getFirstPay());
 
         yearSp.setAdapter(yearAdapter);
-        yearSp.setSelection(30 - 1);
+        yearSp.setSelection((int) settingManager.getYear() - 1);
 
-        bussRateSp.setAdapter(bussRateAdapter);
-        for (int i=0;i<bussRateArr.length;i++) {
-            if (bussRateArr[i]==NORMAL_BUSINESS_RATE) {
-                bussRateSp.setSelection(i);
-            }
-        }
+        initSpinnerSelection(bussRateSp, bussRateAdapter, settingManager.getBussRate(), bussRateArr);
 
-        housingRateSp.setAdapter(housingRateAdapter);
-        for (int i=0;i<housingRateArr.length;i++) {
-            if (housingRateArr[i]==NORMAL_HOUSING_RATE) {
-                housingRateSp.setSelection(i);
+        initSpinnerSelection(housingRateSp, housingRateAdapter, settingManager.getHousingRate(), housingRateArr);
+
+        unitPriceEdit.setText(settingManager.getUnitPrice());
+        areaEdit.setText(settingManager.getArea());
+        sumLoanEdit.setText(settingManager.getSumLoan());
+        sumBussLoanEdit.setText(settingManager.getSumBussLoan());
+        sumHousingLoanEdit.setText(settingManager.getSumHousingLoan());
+    }
+
+    private void initSpinnerSelection(Spinner spinner, BaseSpinnerAdapter adapter, float selectValue, float[] arr) {
+        spinner.setAdapter(adapter);
+        for (int i=0;i<arr.length;i++) {
+            if (arr[i] == selectValue) {
+                spinner.setSelection(i);
             }
         }
     }
@@ -195,52 +210,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.calculate_btn:
-
-                double unitPrice = 0, area = 0, sumLoan = 0, bussRate = 0, housingRate = 0, sumBussLoan = 0, sumHousingLoan = 0;
-                if (mortgageTypeRG.getCheckedRadioButtonId() == R.id.mortgage_type_combine_rb) {
-                    sumBussLoan = getLoanFromEdit(sumBussLoanEdit);
-                    sumHousingLoan = getLoanFromEdit(sumHousingLoanEdit);
-                } else {
-                    if (calculateTypeRG.getCheckedRadioButtonId() == R.id.calculate_type_sum_mortgage_rb) {
-                        sumLoan = getLoanFromEdit(sumLoanEdit);
-                    } else {
-                        unitPrice = Double.parseDouble("".equals(unitPriceEdit.getText().toString().trim())?"0":unitPriceEdit.getText().toString().trim());
-                        area = Double.parseDouble("".equals(areaEdit.getText().toString().trim())?"0": areaEdit.getText().toString().trim());
-                    }
-                }
-
-                double firstPay = firstPaySp.getSelectedItemPosition()/10d;
-
-                int year = yearSp.getSelectedItemPosition()+1;
-
-                PayResult result = null;
-                switch (mortgageTypeRG.getCheckedRadioButtonId()) {
-                    case R.id.mortgage_type_business_rb:
-                        bussRate = bussRateArr[bussRateSp.getSelectedItemPosition()]/100d;
-                        PayContext bussContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumLoan, firstPay, year, bussRate) : new EqualCorpusStrategy(unitPrice, area, sumLoan, firstPay, year, bussRate));
-                        result = bussContext.operate();
-                        break;
-                    case R.id.mortgage_type_housing_fund_rb:
-                        housingRate = housingRateArr[housingRateSp.getSelectedItemPosition()]/100d;
-                        PayContext housingContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumLoan, firstPay, year, housingRate) : new EqualCorpusStrategy(unitPrice, area, sumLoan, firstPay, year, housingRate));
-                        result = housingContext.operate();
-                        break;
-                    case R.id.mortgage_type_combine_rb:
-                        bussRate = bussRateArr[bussRateSp.getSelectedItemPosition()]/100d;
-                        housingRate = housingRateArr[housingRateSp.getSelectedItemPosition()]/100d;
-                        PayContext combineBussContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumBussLoan, firstPay, year, bussRate) : new EqualCorpusStrategy(unitPrice, area, sumBussLoan, firstPay, year, bussRate));
-                        PayContext combineHousingContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumHousingLoan, firstPay, year, housingRate) : new EqualCorpusStrategy(unitPrice, area, sumHousingLoan, firstPay, year, housingRate));
-                        result = combineBussContext.operate().add(combineHousingContext.operate());
-                        break;
-                }
+                PayResult result = calculate();
                 setResultViewData(result);
                 break;
             case R.id.fill_again_btn:
                 unitPriceEdit.setText("");
                 areaEdit.setText("");
                 sumLoanEdit.setText("");
+                sumBussLoanEdit.setText("");
+                sumHousingLoanEdit.setText("");
                 break;
         }
+    }
+
+    @Nullable
+    private PayResult calculate() {
+        double unitPrice = 0, area = 0, sumLoan = 0, bussRate, housingRate , sumBussLoan = 0, sumHousingLoan = 0;
+        if (mortgageTypeRG.getCheckedRadioButtonId() == R.id.mortgage_type_combine_rb) {
+            sumBussLoan = getLoanFromEdit(sumBussLoanEdit);
+            sumHousingLoan = getLoanFromEdit(sumHousingLoanEdit);
+        } else {
+            if (calculateTypeRG.getCheckedRadioButtonId() == R.id.calculate_type_sum_mortgage_rb) {
+                sumLoan = getLoanFromEdit(sumLoanEdit);
+            } else {
+                unitPrice = Double.parseDouble("".equals(unitPriceEdit.getText().toString().trim())?"0":unitPriceEdit.getText().toString().trim());
+                area = Double.parseDouble("".equals(areaEdit.getText().toString().trim())?"0": areaEdit.getText().toString().trim());
+            }
+        }
+
+        double firstPay = firstPaySp.getSelectedItemPosition()/10d;
+
+        int year = yearSp.getSelectedItemPosition()+1;
+
+        PayResult result = null;
+        switch (mortgageTypeRG.getCheckedRadioButtonId()) {
+            case R.id.mortgage_type_business_rb:
+                bussRate = bussRateArr[bussRateSp.getSelectedItemPosition()]/100d;
+                PayContext bussContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumLoan, firstPay, year, bussRate) : new EqualCorpusStrategy(unitPrice, area, sumLoan, firstPay, year, bussRate));
+                result = bussContext.operate();
+                break;
+            case R.id.mortgage_type_housing_fund_rb:
+                housingRate = housingRateArr[housingRateSp.getSelectedItemPosition()]/100d;
+                PayContext housingContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumLoan, firstPay, year, housingRate) : new EqualCorpusStrategy(unitPrice, area, sumLoan, firstPay, year, housingRate));
+                result = housingContext.operate();
+                break;
+            case R.id.mortgage_type_combine_rb:
+                bussRate = bussRateArr[bussRateSp.getSelectedItemPosition()]/100d;
+                housingRate = housingRateArr[housingRateSp.getSelectedItemPosition()]/100d;
+                PayContext combineBussContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumBussLoan, firstPay, year, bussRate) : new EqualCorpusStrategy(unitPrice, area, sumBussLoan, firstPay, year, bussRate));
+                PayContext combineHousingContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumHousingLoan, firstPay, year, housingRate) : new EqualCorpusStrategy(unitPrice, area, sumHousingLoan, firstPay, year, housingRate));
+                result = combineBussContext.operate().add(combineHousingContext.operate());
+                break;
+        }
+        return result;
     }
 
     private void setResultViewData(PayResult result) {
@@ -277,4 +299,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return loan*10000;
     }
 
+    @Override
+    protected void onDestroy() {
+        SettingManager settingManager = SettingManager.getInstance();
+
+        settingManager.setLoanType(mortgageTypeRG.getCheckedRadioButtonId());
+        settingManager.setCalculateType(calculateTypeRG.getCheckedRadioButtonId());
+        settingManager.setPayType(payTypeRG.getCheckedRadioButtonId());
+
+        settingManager.setUnitPrice(unitPriceEdit.getText().toString());
+        settingManager.setArea(areaEdit.getText().toString());
+        settingManager.setSumLoan(sumLoanEdit.getText().toString());
+        settingManager.setSumBussLoan(sumBussLoanEdit.getText().toString());
+        settingManager.setSumHousingLoan(sumHousingLoanEdit.getText().toString());
+
+        settingManager.setFirstPay(firstPaySp.getSelectedItemPosition());
+        settingManager.setYear(yearSp.getSelectedItemPosition() + 1);
+        settingManager.setBussRate(bussRateArr[bussRateSp.getSelectedItemPosition()]);
+        settingManager.setHousingRate(housingRateArr[housingRateSp.getSelectedItemPosition()]);
+        super.onDestroy();
+    }
 }
