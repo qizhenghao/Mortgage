@@ -1,13 +1,12 @@
 <com.bruce.open.mortgage.customViews.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contextClickable="true"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context=".MainActivity">
+                                                      xmlns:tools="http://schemas.android.com/tools"
+                                                      android:layout_width="match_parent"
+                                                      android:layout_height="match_parent"
+                                                      android:contextClickable="true"
+                                                      android:paddingBottom="@dimen/activity_vertical_margin"
+                                                      android:paddingLeft="@dimen/activity_horizontal_margin"
+                                                      android:paddingRight="@dimen/activity_horizontal_margin"
+                                                      tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +15,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="36dp">
+            android:layout_height="36dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
 
             <TextView
                 android:id="@+id/mortgage_type_tv"
@@ -61,21 +61,23 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#5bf27f"/>
+            android:background="@color/blue_light"/>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/calculate_type_combine_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -84,20 +86,22 @@
                 <EditText
                     android:id="@+id/calculate_type_combine_buss_et"
                     android:layout_width="100dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:layout_height="wrap_content"/>
+                    android:inputType="numberDecimal"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="万元"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,9 +110,9 @@
                 <EditText
                     android:id="@+id/calculate_type_combine_housing_et"
                     android:layout_width="100dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:layout_height="wrap_content"/>
+                    android:inputType="numberDecimal"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -166,6 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,11 +185,11 @@
 
                     <EditText
                         android:id="@+id/calculate_unit_price_et"
-                        android:inputType="numberDecimal"
-                        android:gravity="center"
-                        android:maxLength="9"
                         android:layout_width="100dp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLength="9"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -207,16 +212,17 @@
                     <EditText
                         android:id="@+id/calculate_area_et"
                         android:layout_width="100dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:maxLength="5"
                         android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"/>
+                        android:maxLength="5"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="平米"/>
                 </LinearLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -241,13 +247,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/calculate_type_sum_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -257,9 +263,9 @@
             <EditText
                 android:id="@+id/calculate_sum_price_et"
                 android:layout_width="100dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:inputType="numberDecimal"
-                android:layout_height="wrap_content"/>
+                android:inputType="numberDecimal"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -271,7 +277,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="10dp"
-            android:background="#5bf27f"/>
+            android:background="@color/blue_light"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -282,8 +288,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textStyle="bold"
-                android:text="按揭年数："/>
+                android:text="按揭年数："
+                android:textStyle="bold"/>
 
             <Spinner
                 android:id="@+id/mortgage_year_spinner"
@@ -297,7 +303,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#5bf27f"/>
+            android:background="@color/blue_light"/>
 
         <RelativeLayout
             android:id="@+id/buss_rate_layout"
@@ -309,8 +315,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textStyle="bold"
-                android:text="商业贷利率："/>
+                android:text="商业贷利率："
+                android:textStyle="bold"/>
 
             <Spinner
                 android:id="@+id/mortgage_rate_spinner"
@@ -323,17 +329,17 @@
 
         <RelativeLayout
             android:id="@+id/housing_rate_layout"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/housing_rate_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textStyle="bold"
-                android:text="公积金利率："/>
+                android:text="公积金利率："
+                android:textStyle="bold"/>
 
             <Spinner
                 android:id="@+id/housing_rate_spinner"
@@ -347,7 +353,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#5bf27f"/>
+            android:background="@color/blue_light"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -391,217 +397,248 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/calculate_btn"
+                style="@style/common_blue_button"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="开始计算"
-                android:background="#5bf27f"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:layout_height="wrap_content"/>
-            <Button
-                android:layout_marginLeft="10dp"
-                android:id="@+id/fill_again_btn"
-                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="重新填写"
-                android:background="#5bf27f"
-                android:layout_height="wrap_content"/>
+                android:text="@string/start_calculate"/>
+
+            <Button
+                android:id="@+id/fill_again_btn"
+                style="@style/common_blue_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="@string/fill_again"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="10dp"
-            android:background="#5bf27f"/>
+            android:background="@color/blue_light"/>
 
         <LinearLayout
             android:id="@+id/result_layout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <TextView
-                android:text="计算结果："
-                android:layout_marginTop="10dp"
-                android:textColor="@android:color/holo_red_light"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="计算结果："
+                android:textColor="@android:color/holo_red_light"
+                android:textStyle="bold"/>
+
             <LinearLayout
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:text="房款总额："/>
+                    android:text="房款总额："
+                    android:textStyle="bold"/>
+
                 <EditText
                     android:id="@+id/result_sum_price_edit"
                     android:layout_width="150dp"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:editable="false"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"/>
+
                 <TextView
-                    android:text="元"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="元"/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:text="贷款总额："/>
+                    android:text="贷款总额："
+                    android:textStyle="bold"/>
+
                 <EditText
                     android:id="@+id/result_sum_loan_edit"
                     android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     android:editable="false"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"/>
+
                 <TextView
-                    android:text="元"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="元"/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:text="还款总额："/>
+                    android:text="还款总额："
+                    android:textStyle="bold"/>
+
                 <EditText
                     android:id="@+id/result_repayment_sum_price_edit"
                     android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     android:editable="false"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"/>
+
                 <TextView
-                    android:text="元"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="元"/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:text="支付利息："/>
+                    android:text="支付利息："
+                    android:textStyle="bold"/>
+
                 <EditText
                     android:id="@+id/result_sum_interest_edit"
                     android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     android:editable="false"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"/>
+
                 <TextView
-                    android:text="元"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="元"/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:text="首期付款："/>
+                    android:text="首期付款："
+                    android:textStyle="bold"/>
+
                 <EditText
                     android:id="@+id/result_fisrt_payment_price_edit"
                     android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     android:editable="false"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"/>
+
                 <TextView
-                    android:text="元"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="元"/>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:text="贷款月数："/>
+                    android:text="贷款月数："
+                    android:textStyle="bold"/>
+
                 <EditText
                     android:id="@+id/result_sum_month_edit"
                     android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     android:editable="false"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"/>
+
                 <TextView
-                    android:text="月"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="月"/>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/equal_interest_every_month_pay_layout"
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:text="每月还款："/>
+                    android:text="每月还款："
+                    android:textStyle="bold"/>
+
                 <EditText
                     android:id="@+id/result_every_month_payment_edit"
                     android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     android:editable="false"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"/>
+
                 <TextView
-                    android:text="元"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="元"/>
             </LinearLayout>
 
             <!--<TextView-->
-                <!--android:id="@+id/equal_corpus_every_month_pay_tv"-->
-                <!--android:gravity="center"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
+            <!--android:id="@+id/equal_corpus_every_month_pay_tv"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
             <TextView
-                android:text="*以上结果仅供参考"
-                android:layout_marginTop="10dp"
-                android:textColor="@android:color/holo_red_light"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="*以上结果仅供参考"
+                android:textColor="@android:color/holo_red_light"
+                android:textStyle="bold"/>
         </LinearLayout>
     </LinearLayout>
 </com.bruce.open.mortgage.customViews.CustomScrollView>
