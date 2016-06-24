@@ -1,5 +1,6 @@
 package com.bruce.open.mortgage;
 
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+
+import com.bruce.open.mortgage.Utils.SystemStatusManager;
 import com.bruce.open.mortgage.adapter.BaseFramentPagerAdapter;
 import com.bruce.open.mortgage.customViews.TabViewPagerIndicator;
 import com.bruce.open.mortgage.fragments.MortgageCalculateFragment;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTranslucentStatus();
         setContentView(R.layout.main);
         initViews();
         setListener();
@@ -90,5 +95,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
+    }
+
+    // 需要setContentView之前调用
+    private void setTranslucentStatus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 透明状态栏
+            getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明导航栏
+            getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            SystemStatusManager tintManager = new SystemStatusManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            // 设置状态栏的颜色
+            tintManager.setStatusBarTintResource(R.color.blue_light);
+            getWindow().getDecorView().setFitsSystemWindows(true);
+        }
     }
 }
