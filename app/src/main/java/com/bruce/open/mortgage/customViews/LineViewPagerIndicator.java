@@ -37,7 +37,7 @@ public class LineViewPagerIndicator extends View implements ViewPagerIndicator {
 	private int mScrollState;
 	private int mCurrentPage;
 	private float mPositionOffset;
-	private float mLinePadding = 50 * 2.0f;//Methods.computePixelsWithDensity(50);
+	private float mLinePadding = 0f;//Methods.computePixelsWithDensity(50);
 
 	private int mTouchSlop;
 	private float mLastMotionX = -1;

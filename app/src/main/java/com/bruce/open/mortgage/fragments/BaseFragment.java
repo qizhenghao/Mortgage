@@ -24,13 +24,8 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-	}
-
-    @Override
-    public void onStart() {
-        super.onStart();
         init();
-    }
+	}
 
     /**全部初始化，包括view、data、listener*/
 	public void init() {

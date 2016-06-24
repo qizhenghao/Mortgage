@@ -139,6 +139,14 @@ public class SettingManager {
         return sp.getFloat("year", MainActivity.DEFAULT_YEAR);
     }
 
+    /** 存储计算结果*/
+    public void setResultJson(String resultJson) {
+        sp.edit().putString("result_json", resultJson).apply();
+    }
+    public String getResultJson() {
+        return sp.getString("result_json", "");
+    }
+
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
      * @param context
