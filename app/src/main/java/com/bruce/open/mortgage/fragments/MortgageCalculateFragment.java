@@ -21,6 +21,8 @@ import com.bruce.open.mortgage.Utils.SettingManager;
 import com.bruce.open.mortgage.adapter.BaseSpinnerAdapter;
 import com.bruce.open.mortgage.customViews.CustomScrollView;
 
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 
 /**
@@ -64,6 +66,8 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
     private BaseSpinnerAdapter yearAdapter;
     private BaseSpinnerAdapter bussRateAdapter;
     private BaseSpinnerAdapter housingRateAdapter;
+
+    PayResult result = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -170,6 +174,12 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
         });
         mContentView.findViewById(R.id.calculate_btn).setOnClickListener(this);
         mContentView.findViewById(R.id.fill_again_btn).setOnClickListener(this);
+        mContentView.findViewById(R.id.mortgage_calculate_save_result_btn).setOnClickListener(this);
+    }
+
+    @Override
+    public void refresh() {
+
     }
 
     private void initSpinnerSelection(Spinner spinner, BaseSpinnerAdapter adapter, float selectValue, float[] arr) {
@@ -185,8 +195,8 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.calculate_btn:
-                PayResult result = calculate();
-                setResultViewData(result);
+                PayResult payResult = calculate();
+                setResultViewData(payResult);
                 break;
             case R.id.fill_again_btn:
                 unitPriceEdit.setText("");
@@ -194,6 +204,14 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                 sumLoanEdit.setText("");
                 sumBussLoanEdit.setText("");
                 sumHousingLoanEdit.setText("");
+                break;
+            case R.id.mortgage_calculate_save_result_btn:
+                if (result == null)
+                    Toast.makeText(mActivity, "需要先计算哦", Toast.LENGTH_SHORT).show();
+                else {
+                    SettingManager.getInstance().setMyMortgageResultJson(result.toJSONObj().toString());
+                    onRefreshFragmentListener.onRefresh(MyMortgageFragment.class);
+                }
                 break;
         }
     }
@@ -217,7 +235,6 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
 
         int year = yearSp.getSelectedItemPosition()+1;
 
-        PayResult result = null;
         switch (mortgageTypeRG.getCheckedRadioButtonId()) {
             case R.id.mortgage_type_business_rb:
                 bussRate = bussRateArr[bussRateSp.getSelectedItemPosition()]/100d;
@@ -241,14 +258,15 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
     }
 
     private void setResultViewData(PayResult result) {
-        resSumPriceEdit.setText(result.sumPrice == 0 ? "0" : new DecimalFormat("#.00").format(result.sumPrice));
-        resSumLoanEdit.setText(result.sumLoan==0?"0":new DecimalFormat("#.00").format(result.sumLoan));
-        resSumPaymentEdit.setText(result.sumPayPrice==0?"0":new DecimalFormat("#.00").format(result.sumPayPrice));
-        resSumInterestEdit.setText(result.sumInterest==0?"0":new DecimalFormat("#.00").format(result.sumInterest));
-        resfirstPaymentEdit.setText(result.firstPay==0?"0":new DecimalFormat("#.00").format(result.firstPay));
-        resSumMonthEdit.setText(result.monthCount==0?"0":new DecimalFormat("#.00").format(result.monthCount));
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        resSumPriceEdit.setText(result.sumPrice == 0 ? "0" : decimalFormat.format(result.sumPrice));
+        resSumLoanEdit.setText(result.sumLoan==0?"0":decimalFormat.format(result.sumLoan));
+        resSumPaymentEdit.setText(result.sumPayPrice==0?"0":decimalFormat.format(result.sumPayPrice));
+        resSumInterestEdit.setText(result.sumInterest==0?"0":decimalFormat.format(result.sumInterest));
+        resfirstPaymentEdit.setText(result.firstPay==0?"0":decimalFormat.format(result.firstPay));
+        resSumMonthEdit.setText(result.monthCount==0?"0":decimalFormat.format(result.monthCount));
         if (payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb) {
-            resEveryMonthPaymentEdit.setText(result.everyMonthPay==0?"0":new DecimalFormat("#.00").format(result.everyMonthPay));
+            resEveryMonthPaymentEdit.setText(result.everyMonthPay==0?"0":decimalFormat.format(result.everyMonthPay));
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentEdit.getLayoutParams();
             params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
             resEveryMonthPaymentEdit.setLayoutParams(params);
@@ -257,7 +275,7 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
             CustomScrollView.IS_INTERCEPT = true;
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < result.everyMonthPayArr.length; i++) {
-                sb.append("第" + (i+1) + "月，" + new DecimalFormat("#.00").format(result.everyMonthPayArr[i]) + "\n");
+                sb.append("第" + (i+1) + "月，" + decimalFormat.format(result.everyMonthPayArr[i]) + "\n");
             }
             resEveryMonthPaymentEdit.setText(sb.toString());
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentEdit.getLayoutParams();

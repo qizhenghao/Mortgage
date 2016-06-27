@@ -3,15 +3,18 @@ package com.bruce.open.mortgage.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
+
+import com.bruce.open.mortgage.fragments.BaseFragment;
 
 import java.util.List;
 
 public class BaseFramentPagerAdapter extends FragmentPagerAdapter {
 
-    private List<Fragment> fragmentList;
+    private List<BaseFragment> fragmentList;
 
 
-    public BaseFramentPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+    public BaseFramentPagerAdapter(FragmentManager fm, List<BaseFragment> fragmentList) {
         super(fm);
         this.fragmentList = fragmentList;
     }
@@ -28,4 +31,13 @@ public class BaseFramentPagerAdapter extends FragmentPagerAdapter {
         }
         return 0;
     }
+
+    public void refresh(Class fragmentClass) {
+        for (BaseFragment fragment : fragmentList) {
+            if (fragment.getClass().getName().equals(fragmentClass.getName())) {
+                fragment.refresh();
+            }
+        }
+    }
+
 }

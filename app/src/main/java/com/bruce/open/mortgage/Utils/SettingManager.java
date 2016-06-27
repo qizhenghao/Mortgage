@@ -2,6 +2,7 @@ package com.bruce.open.mortgage.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Pair;
 
 import com.bruce.open.mortgage.MainActivity;
 import com.bruce.open.mortgage.MyApplication;
@@ -208,4 +209,16 @@ public class SettingManager {
 
         return null;
     }
+
+    public int version;
+    public void setMyMortgageResultJson(String s) {
+        sp.edit().putString("my_mortgage_result_json", s).apply();
+        version++;
+    }
+    public Pair getMyMortgageResultJson() {
+        Pair pair = new Pair(version, sp.getString("my_mortgage_result_json", ""));
+        return pair;
+    }
+
+
 }

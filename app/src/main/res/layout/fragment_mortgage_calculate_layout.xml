@@ -639,6 +639,13 @@
                 android:text="*以上结果仅供参考"
                 android:textColor="@android:color/holo_red_light"
                 android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/mortgage_calculate_save_result_btn"
+                style="@style/common_blue_button"
+                android:layout_width="match_parent"
+                android:text="保存到我的房贷"
+                android:layout_height="@dimen/common_button_height_big"/>
         </LinearLayout>
     </LinearLayout>
 </com.bruce.open.mortgage.customViews.CustomScrollView>

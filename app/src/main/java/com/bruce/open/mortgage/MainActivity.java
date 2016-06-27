@@ -13,13 +13,15 @@ import android.view.WindowManager;
 import com.bruce.open.mortgage.Utils.SystemStatusManager;
 import com.bruce.open.mortgage.adapter.BaseFramentPagerAdapter;
 import com.bruce.open.mortgage.customViews.TabViewPagerIndicator;
+import com.bruce.open.mortgage.fragments.BaseFragment;
 import com.bruce.open.mortgage.fragments.MortgageCalculateFragment;
 import com.bruce.open.mortgage.fragments.MyMortgageFragment;
+import com.bruce.open.mortgage.listeners.OnRefreshFragmentListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRefreshFragmentListener {
 
     public static final float NORMAL_BUSINESS_RATE = 4.90f;
     public static final float NORMAL_HOUSING_RATE = 3.25f;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager viewPager;
     private TabViewPagerIndicator tabViewPagerIndicator;
     private BaseFramentPagerAdapter viewPagerAdapter;
-    private List<Fragment> fragmentList;
+    private List<BaseFragment> fragmentList;
 
     private MortgageCalculateFragment mortgageCalculateFragment;
     private MyMortgageFragment myMortgageFragment;
@@ -112,5 +114,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tintManager.setStatusBarTintResource(R.color.blue_light);
             getWindow().getDecorView().setFitsSystemWindows(true);
         }
+    }
+
+    @Override
+    public void onRefresh(Class fragmentClass) {
+        viewPagerAdapter.refresh(fragmentClass);
     }
 }

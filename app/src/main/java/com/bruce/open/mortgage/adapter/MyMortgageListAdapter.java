@@ -22,9 +22,9 @@ public class MyMortgageListAdapter extends BaseAdapter {
 
     private Context context;
     private int type;
-    private float[] dataArr;
+    private double[] dataArr;
 
-    public MyMortgageListAdapter(Context context, int type, float[] dataArr) {
+    public MyMortgageListAdapter(Context context, int type, double[] dataArr) {
         this.context = context;
         this.type = type;
         this.dataArr = dataArr;
@@ -73,6 +73,13 @@ public class MyMortgageListAdapter extends BaseAdapter {
                 break;
         }
         return convertView;
+    }
+
+    public void setData(double[] dataArr) {
+        if (dataArr == null)
+            dataArr = new double[0];
+        this.dataArr = dataArr;
+        notifyDataSetChanged();
     }
 
     class ViewHolder {
