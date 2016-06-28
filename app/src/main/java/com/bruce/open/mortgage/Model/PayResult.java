@@ -4,8 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by qizhenghao on 16/6/21.
@@ -31,6 +29,8 @@ public class PayResult {
     public double[] everyMonthPayArr;
 
     public long beginTime;
+    public int loanTypeId;
+    public int payTypeId;
 
     public JSONObject toJSONObj() {
         JSONObject object = new JSONObject();

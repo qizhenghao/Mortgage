@@ -255,6 +255,9 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                 result = combineBussContext.operate().add(combineHousingContext.operate());
                 break;
         }
+        result.loanTypeId = mortgageTypeRG.getCheckedRadioButtonId();
+        result.payTypeId = payTypeRG.getCheckedRadioButtonId();
+
         return result;
     }
 
