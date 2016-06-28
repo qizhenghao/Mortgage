@@ -1,2 +1,2 @@
 # Mortogage
-Mortgage calculator ，a simple tool .
+Android Mortgage calculator ，a simple tool .
