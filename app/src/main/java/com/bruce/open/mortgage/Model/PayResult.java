@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,8 @@ public class PayResult {
 
     public double[] everyMonthPayArr;
 
+    public long beginTime;
+
     public JSONObject toJSONObj() {
         JSONObject object = new JSONObject();
         try {
@@ -40,6 +43,7 @@ public class PayResult {
             object.put("monthCount", monthCount);
             object.put("everyMonthPay", everyMonthPay);
             object.put("monthRate", monthRate);
+            object.put("beginTime", beginTime);
             if (everyMonthPayArr != null) {
                 JSONArray array = new JSONArray();
                 for (double anEveryMonthPayArr : everyMonthPayArr) {
@@ -65,6 +69,7 @@ public class PayResult {
             result.monthCount = object.getInt("monthCount");
             result.everyMonthPay = object.getDouble("everyMonthPay");
             result.monthRate = object.getDouble("monthRate");
+            result.beginTime = object.getLong("beginTime");
             JSONArray array = object.getJSONArray("everyMonthPayArr");
             if (array != null) {
                 result.everyMonthPayArr = new double[array.length()];

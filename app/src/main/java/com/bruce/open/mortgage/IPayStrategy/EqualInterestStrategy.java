@@ -40,6 +40,10 @@ public class EqualInterestStrategy implements IPayStrategy {
         result.everyMonthPay = result.sumLoan * result.monthRate * (Math.pow((1 + result.monthRate), result.monthCount) / ((Math.pow((1 + result.monthRate), result.monthCount) - 1)));
         result.sumPayPrice = result.everyMonthPay * result.monthCount;
         result.sumInterest = result.sumPayPrice - result.sumLoan;
+        result.everyMonthPayArr = new double[result.monthCount];
+        for (int i=0;i<result.monthCount;i++) {
+            result.everyMonthPayArr[i] = result.everyMonthPay;
+        }
         return result;
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bruce.open.mortgage.Model.EveryPayInfo;
 import com.bruce.open.mortgage.Model.PayResult;
 import com.bruce.open.mortgage.R;
 import com.bruce.open.mortgage.Utils.SettingManager;
@@ -57,8 +58,6 @@ public class MyMortgageFragment extends BaseFragment {
         monthTv = (TextView) mHeadView.findViewById(R.id.result_sum_month_tv);
         everyMonthPayTv = (TextView) mHeadView.findViewById(R.id.result_every_month_payment_tv);
         mListView.addHeaderView(mHeadView);
-        mAdapter = new MyMortgageListAdapter(mContext, MyMortgageListAdapter.YEAR, new double[0]);
-        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -79,7 +78,11 @@ public class MyMortgageFragment extends BaseFragment {
         firstPayTv.setText(result.firstPay == 0 ? "0" : decimalFormat.format(result.firstPay));
         monthTv.setText(result.monthCount == 0 ? "0" : decimalFormat.format(result.monthCount));
         everyMonthPayTv.setText(result.everyMonthPay == 0 ? "0" : decimalFormat.format(result.everyMonthPay));
-        mAdapter.setData(result.everyMonthPayArr);
+        if (mAdapter == null) {
+            mAdapter = new MyMortgageListAdapter(mContext, EveryPayInfo.parse(result));
+            mListView.setAdapter(mAdapter);
+        } else
+            mAdapter.setData(EveryPayInfo.parse(result));
     }
 
     @Override

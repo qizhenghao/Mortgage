@@ -209,6 +209,7 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                 if (result == null)
                     Toast.makeText(mActivity, "需要先计算哦", Toast.LENGTH_SHORT).show();
                 else {
+                    result.beginTime = System.currentTimeMillis();
                     SettingManager.getInstance().setMyMortgageResultJson(result.toJSONObj().toString());
                     onRefreshFragmentListener.onRefresh(MyMortgageFragment.class);
                 }

@@ -5,7 +5,7 @@
               android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/content_tv"
+        android:id="@+id/date_tv"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="30dp"/>

@@ -50,7 +50,7 @@ public class BaseSpinnerAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.spinner_item_layout, null);
-            holder.contentTv = (TextView) convertView.findViewById(R.id.content_tv);
+            holder.contentTv = (TextView) convertView.findViewById(R.id.date_tv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

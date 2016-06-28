@@ -156,6 +156,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/equal_interest_every_month_pay_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
