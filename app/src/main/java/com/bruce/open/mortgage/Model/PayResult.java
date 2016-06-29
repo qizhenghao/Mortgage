@@ -29,8 +29,11 @@ public class PayResult {
     public double[] everyMonthPayArr;
 
     public long beginTime;
-    public int loanTypeId;
-    public int payTypeId;
+    public String loanType;
+    public String payType;
+    public String calculateType;
+    public double housingRate;
+    public double bussRate;
 
     public JSONObject toJSONObj() {
         JSONObject object = new JSONObject();
@@ -44,6 +47,11 @@ public class PayResult {
             object.put("everyMonthPay", everyMonthPay);
             object.put("monthRate", monthRate);
             object.put("beginTime", beginTime);
+            object.put("loanType", loanType);
+            object.put("payType", payType);
+            object.put("calculateType", calculateType);
+            object.put("housingRate", housingRate);
+            object.put("bussRate", bussRate);
             if (everyMonthPayArr != null) {
                 JSONArray array = new JSONArray();
                 for (double anEveryMonthPayArr : everyMonthPayArr) {
@@ -70,6 +78,11 @@ public class PayResult {
             result.everyMonthPay = object.getDouble("everyMonthPay");
             result.monthRate = object.getDouble("monthRate");
             result.beginTime = object.getLong("beginTime");
+            result.calculateType = object.getString("calculateType");
+            result.loanType = object.getString("loanType");
+            result.payType = object.getString("payType");
+            result.housingRate = object.getDouble("housingRate");
+            result.bussRate = object.getDouble("bussRate");
             JSONArray array = object.getJSONArray("everyMonthPayArr");
             if (array != null) {
                 result.everyMonthPayArr = new double[array.length()];

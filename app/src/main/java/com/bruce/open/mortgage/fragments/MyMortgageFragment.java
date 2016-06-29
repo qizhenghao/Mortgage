@@ -26,6 +26,13 @@ public class MyMortgageFragment extends BaseFragment {
 
     private ListView mListView;
     private View mHeadView;
+    private TextView loanTypeTv;
+    private TextView calculateTypeTv;
+    private TextView payTypeTv;
+    private TextView housingRateTv;
+    private TextView bussRateTv;
+    private TextView yearTv;
+
     private TextView sumPriceTv;
     private TextView sumLoanTv;
     private TextView sumPayPriceTv;
@@ -50,6 +57,12 @@ public class MyMortgageFragment extends BaseFragment {
     protected void initView() {
         mListView = (ListView) mContentView.findViewById(R.id.fragment_my_mortgage_lv);
         mHeadView = mActivity.getLayoutInflater().inflate(R.layout.list_headview_my_mortgage_layout, null);
+        loanTypeTv = (TextView) mHeadView.findViewById(R.id.my_mortgage_header_loan_type_tv);
+        calculateTypeTv = (TextView) mHeadView.findViewById(R.id.my_mortgage_header_calculate_type_tv);
+        payTypeTv = (TextView) mHeadView.findViewById(R.id.my_mortgage_header_pay_type_tv);
+        housingRateTv = (TextView) mHeadView.findViewById(R.id.my_mortgage_header_housing_rate_tv);
+        bussRateTv = (TextView) mHeadView.findViewById(R.id.my_mortgage_header_buss_rate_tv);
+        yearTv = (TextView) mHeadView.findViewById(R.id.my_mortgage_header_year_tv);
         sumPriceTv = (TextView) mHeadView.findViewById(R.id.result_sum_price_tv);
         sumLoanTv = (TextView) mHeadView.findViewById(R.id.result_sum_loan_tv);
         sumPayPriceTv = (TextView) mHeadView.findViewById(R.id.result_repayment_sum_price_tv);
@@ -71,6 +84,15 @@ public class MyMortgageFragment extends BaseFragment {
         if (result == null)
             return;
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        loanTypeTv.setText(result.loanType);
+        calculateTypeTv.setText(result.calculateType);
+        payTypeTv.setText(result.payType);
+        housingRateTv.setText("公积金利率：" + (result.housingRate == 0 ? "" : decimalFormat.format(result.housingRate) + "%"));
+        housingRateTv.setVisibility(result.housingRate == 0 ? View.GONE : View.VISIBLE);
+        bussRateTv.setText("商业利率：" + (result.bussRate == 0 ? "" : decimalFormat.format(result.bussRate) + "%"));
+        bussRateTv.setVisibility(result.bussRate == 0 ? View.GONE : View.VISIBLE);
+        yearTv.setText("按揭年数：" + (result.monthCount/12) + "年");
+
         sumPriceTv.setText(result.sumPrice == 0 ? "0" : decimalFormat.format(result.sumPrice));
         sumLoanTv.setText(result.sumLoan == 0 ? "0" : decimalFormat.format(result.sumLoan));
         sumPayPriceTv.setText(result.sumPayPrice == 0 ? "0" : decimalFormat.format(result.sumPayPrice));

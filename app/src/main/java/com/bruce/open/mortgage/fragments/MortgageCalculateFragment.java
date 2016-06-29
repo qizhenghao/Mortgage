@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -20,8 +21,6 @@ import com.bruce.open.mortgage.R;
 import com.bruce.open.mortgage.Utils.SettingManager;
 import com.bruce.open.mortgage.adapter.BaseSpinnerAdapter;
 import com.bruce.open.mortgage.customViews.CustomScrollView;
-
-import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
@@ -219,7 +218,7 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
 
     @Nullable
     private PayResult calculate() {
-        double unitPrice = 0, area = 0, sumLoan = 0, bussRate, housingRate , sumBussLoan = 0, sumHousingLoan = 0;
+        double unitPrice = 0, area = 0, sumLoan = 0, bussRate = 0, housingRate = 0, sumBussLoan = 0, sumHousingLoan = 0;
         if (mortgageTypeRG.getCheckedRadioButtonId() == R.id.mortgage_type_combine_rb) {
             sumBussLoan = getLoanFromEdit(sumBussLoanEdit);
             sumHousingLoan = getLoanFromEdit(sumHousingLoanEdit);
@@ -255,8 +254,11 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                 result = combineBussContext.operate().add(combineHousingContext.operate());
                 break;
         }
-        result.loanTypeId = mortgageTypeRG.getCheckedRadioButtonId();
-        result.payTypeId = payTypeRG.getCheckedRadioButtonId();
+        result.loanType = "贷款类型：" + ((RadioButton) mContentView.findViewById(mortgageTypeRG.getCheckedRadioButtonId())).getText().toString();
+        result.calculateType = "计算方式：" + ((RadioButton) mContentView.findViewById(calculateTypeRG.getCheckedRadioButtonId())).getText().toString();
+        result.payType = "还款方式：" + ((RadioButton) mContentView.findViewById(payTypeRG.getCheckedRadioButtonId())).getText().toString();
+        result.housingRate = housingRate * 100d;
+        result.bussRate = bussRate * 100d;
 
         return result;
     }

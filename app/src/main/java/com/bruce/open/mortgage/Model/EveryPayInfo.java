@@ -21,8 +21,8 @@ public class EveryPayInfo {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTimeInMillis(payResult.beginTime);
         double sumCorpus = payResult.sumLoan;
-        EveryPayInfo[] infos = new EveryPayInfo[payResult.everyMonthPayArr.length];
-        for (int i = 0; i < payResult.everyMonthPayArr.length; i++) {
+        EveryPayInfo[] infos = new EveryPayInfo[payResult.everyMonthPayArr==null?0:payResult.everyMonthPayArr.length];
+        for (int i = 0; i < infos.length; i++) {
             EveryPayInfo info = new EveryPayInfo();
             calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 1);
             info.date = dateFormat.format(calendar.getTime());
