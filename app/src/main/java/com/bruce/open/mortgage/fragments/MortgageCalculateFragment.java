@@ -99,7 +99,9 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
         resSumMonthEdit = (EditText) mContentView.findViewById(R.id.result_sum_month_edit);
         resEveryMonthPaymentEdit = (EditText) mContentView.findViewById(R.id.result_every_month_payment_edit);
 
-        mContentView.findViewById(R.id.mortgage_type_tv).setFocusable(true);
+        mContentView.findViewById(R.id.mortgage_type_tv).setFocusable(true);//设置不自动弹出输入法，也可以在manifest中设置
+
+        initProgressBar((ViewGroup) mActivity.getWindow().getDecorView(), true);
     }
 
     @Override
@@ -196,8 +198,20 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.calculate_btn:
-                PayResult payResult = calculate();
-                setResultViewData(payResult);
+                showProgressBar();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final PayResult payResult = calculate();
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setResultViewData(payResult);
+                                dismissProgressBar();
+                            }
+                        });
+                    }
+                }).start();
                 break;
             case R.id.fill_again_btn:
                 unitPriceEdit.setText("");
@@ -301,7 +315,7 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
     }
 
     @Override
-    public void onDestroy() {
+    public void onPause() {
         SettingManager settingManager = SettingManager.getInstance();
 
         settingManager.setLoanType(mortgageTypeRG.getCheckedRadioButtonId());
@@ -318,6 +332,6 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
         settingManager.setYear(yearSp.getSelectedItemPosition() + 1);
         settingManager.setBussRate(bussRateArr[bussRateSp.getSelectedItemPosition()]);
         settingManager.setHousingRate(housingRateArr[housingRateSp.getSelectedItemPosition()]);
-        super.onDestroy();
+        super.onPause();
     }
 }

@@ -135,18 +135,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         //实现了每次重新回到视野，先显示一张loading图
-//        if (isFromWelcome) {
-//            isFromWelcome = false;
-//            delayLayout.setVisibility(View.GONE);
-//        } else {
-//            delayLayout.setVisibility(View.VISIBLE);
-//            getWindow().getDecorView().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    delayLayout.setVisibility(View.GONE);
-//                }
-//            }, 1500);
-//        }
+        if (isFromWelcome) {
+            isFromWelcome = false;
+            delayLayout.setVisibility(View.GONE);
+        } else {
+            delayLayout.setVisibility(View.VISIBLE);
+            getWindow().getDecorView().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    delayLayout.setVisibility(View.GONE);
+                }
+            }, 1500);
+        }
     }
 
     @Override

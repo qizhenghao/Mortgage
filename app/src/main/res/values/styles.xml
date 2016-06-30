@@ -7,6 +7,11 @@
     <style name="WelcomeTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
         <item name="android:background">@drawable/welcome_bg</item>
     </style>
+    <!--************************************* progressbar **********************************-->
+    <style name="progressBar" parent="@android:style/Widget.ProgressBar">
+        <item name="android:indeterminateDuration">1000</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_bar_anim</item>
+    </style>
     <!--************************************* Button **********************************-->
     <style name="common_button">
         <item name="android:gravity">center</item>
