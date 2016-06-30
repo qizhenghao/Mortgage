@@ -1,15 +1,18 @@
-package com.bruce.open.mortgage;
+package com.bruce.open.mortgage.activities;
 
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
+import com.bruce.open.mortgage.R;
 import com.bruce.open.mortgage.Utils.SystemStatusManager;
 import com.bruce.open.mortgage.adapter.BaseFramentPagerAdapter;
 import com.bruce.open.mortgage.customViews.TabViewPagerIndicator;
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private MortgageCalculateFragment mortgageCalculateFragment;
     private MyMortgageFragment myMortgageFragment;
+    private FrameLayout delayLayout;
+    private boolean isFromWelcome;
 
 
     @Override
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initData() {
+        isFromWelcome = getIntent().getBooleanExtra("is_from_welcome", true);
         mortgageCalculateFragment = new MortgageCalculateFragment();
         myMortgageFragment = new MyMortgageFragment();
         fragmentList = new ArrayList<>();
@@ -70,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         tabViewPagerIndicator = (TabViewPagerIndicator) findViewById(R.id.tab_page_indicator);
         tabViewPagerIndicator.setViewIds(new int[]{R.id.tab_line_layout, R.id.tab_one, R.id.tab_two});
+        delayLayout = new FrameLayout(MainActivity.this);
+        delayLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        delayLayout.setBackgroundResource(R.drawable.welcome_bg);
+        ((FrameLayout)getWindow().getDecorView()).addView(delayLayout);
     }
 
     @Override
@@ -119,5 +129,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRefresh(Class fragmentClass) {
         viewPagerAdapter.refresh(fragmentClass);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //实现了每次重新回到视野，先显示一张loading图
+//        if (isFromWelcome) {
+//            isFromWelcome = false;
+//            delayLayout.setVisibility(View.GONE);
+//        } else {
+//            delayLayout.setVisibility(View.VISIBLE);
+//            getWindow().getDecorView().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    delayLayout.setVisibility(View.GONE);
+//                }
+//            }, 1500);
+//        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);//不销毁activity，重新回到视野后保持原样
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

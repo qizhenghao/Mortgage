@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Pair;
 
-import com.bruce.open.mortgage.MainActivity;
+import com.bruce.open.mortgage.activities.MainActivity;
 import com.bruce.open.mortgage.MyApplication;
 import com.bruce.open.mortgage.R;
 

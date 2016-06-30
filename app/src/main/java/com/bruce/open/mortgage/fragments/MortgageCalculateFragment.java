@@ -98,6 +98,8 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
         resfirstPaymentEdit = (EditText) mContentView.findViewById(R.id.result_fisrt_payment_price_edit);
         resSumMonthEdit = (EditText) mContentView.findViewById(R.id.result_sum_month_edit);
         resEveryMonthPaymentEdit = (EditText) mContentView.findViewById(R.id.result_every_month_payment_edit);
+
+        mContentView.findViewById(R.id.mortgage_type_tv).setFocusable(true);
     }
 
     @Override

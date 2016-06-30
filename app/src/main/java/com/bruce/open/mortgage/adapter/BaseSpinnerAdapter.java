@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.bruce.open.mortgage.MainActivity;
+import com.bruce.open.mortgage.activities.MainActivity;
 import com.bruce.open.mortgage.R;
 
 /**
