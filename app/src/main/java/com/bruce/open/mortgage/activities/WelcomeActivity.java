@@ -14,14 +14,14 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+//        startActivity(new Intent(WelcomeActivity.this, DesktopActivity.class));
 //        WelcomeActivity.this.finish();
 
 //        Timer timer = new Timer();
 //        TimerTask timerTask = new TimerTask() {
 //            @Override
 //            public void run() {
-//                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+//                startActivity(new Intent(WelcomeActivity.this, DesktopActivity.class));
 //                WelcomeActivity.this.finish();
 //            }
 //        };
@@ -29,7 +29,7 @@ public class WelcomeActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, DesktopActivity.class);
                 intent.putExtra("is_from_welcome", true);
                 startActivity(intent);
                 WelcomeActivity.this.finish();

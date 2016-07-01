@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Pair;
 
-import com.bruce.open.mortgage.activities.MainActivity;
+import com.bruce.open.mortgage.activities.DesktopActivity;
 import com.bruce.open.mortgage.MyApplication;
 import com.bruce.open.mortgage.R;
 
@@ -105,7 +105,7 @@ public class SettingManager {
         sp.edit().putFloat("first_pay", firstPay).apply();
     }
     public float getFirstPay() {
-        return sp.getFloat("first_pay", MainActivity.DEFAULT_FIRST_PAY);
+        return sp.getFloat("first_pay", DesktopActivity.DEFAULT_FIRST_PAY);
     }
 
     /** 存储利率*/
@@ -121,7 +121,7 @@ public class SettingManager {
         sp.edit().putFloat("buss_rate", rate).apply();
     }
     public float getBussRate() {
-        return sp.getFloat("buss_rate", MainActivity.NORMAL_BUSINESS_RATE);
+        return sp.getFloat("buss_rate", DesktopActivity.NORMAL_BUSINESS_RATE);
     }
 
     /** 存储公积金贷款利率*/
@@ -129,7 +129,7 @@ public class SettingManager {
         sp.edit().putFloat("housing_rate", rate).apply();
     }
     public float getHousingRate() {
-        return sp.getFloat("housing_rate", MainActivity.NORMAL_HOUSING_RATE);
+        return sp.getFloat("housing_rate", DesktopActivity.NORMAL_HOUSING_RATE);
     }
 
     /** 存储按揭年数*/
@@ -137,7 +137,7 @@ public class SettingManager {
         sp.edit().putFloat("year", year).apply();
     }
     public float getYear() {
-        return sp.getFloat("year", MainActivity.DEFAULT_YEAR);
+        return sp.getFloat("year", DesktopActivity.DEFAULT_YEAR);
     }
 
     /** 存储计算结果*/

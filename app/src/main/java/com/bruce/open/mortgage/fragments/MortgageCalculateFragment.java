@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import java.text.DecimalFormat;
  */
 public class MortgageCalculateFragment extends BaseFragment implements View.OnClickListener{
 
+    private ScrollView scrollView;
     private RadioGroup mortgageTypeRG;
     private RadioGroup calculateTypeRG;
     private EditText unitPriceEdit;
@@ -78,6 +80,7 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
 
     @Override
     protected void initView() {
+        scrollView = (ScrollView) mContentView.findViewById(R.id.mortgage_calculate_sv);
         mortgageTypeRG = (RadioGroup) mContentView.findViewById(R.id.mortgage_type_rg);
         calculateTypeRG = (RadioGroup) mContentView.findViewById(R.id.calculate_type_rg);
         unitPriceEdit = (EditText) mContentView.findViewById(R.id.calculate_unit_price_et);
@@ -209,6 +212,7 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                             @Override
                             public void run() {
                                 setResultViewData(payResult);
+                                scrollView.fullScroll(View.FOCUS_DOWN);
                                 dismissProgressBar();
                             }
                         });

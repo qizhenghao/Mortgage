@@ -17,9 +17,11 @@ import java.util.List;
  * <p/>
  * 发现多个tab切换效果
  */
-public class TabViewPagerIndicator extends RelativeLayout implements ViewPager.OnPageChangeListener {
+public class DesktopTabHost extends RelativeLayout implements ViewPager.OnPageChangeListener {
 
-    private final String TAG = "TabViewPagerIndicator";
+    private final String TAG = "DesktopTabHost";
+
+    private static final int TAB_COUNT = 2;
 
     private List<TextView> mTextItems;
 
@@ -29,7 +31,15 @@ public class TabViewPagerIndicator extends RelativeLayout implements ViewPager.O
 
     private int[] mViewIds;
 
-    public TabViewPagerIndicator(Context context, AttributeSet attrs) {
+    // TAB类型
+    public static interface TabType {
+        int MORTGAGE_CALCULATE = 0;
+        int MY_MORTGAGE = 1;
+//        int CHAT = 2;
+//        int MINE = 3; // 个人页
+    }
+
+    public DesktopTabHost(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

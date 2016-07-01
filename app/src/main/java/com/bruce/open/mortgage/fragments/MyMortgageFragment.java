@@ -5,14 +5,18 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bruce.open.mortgage.Model.EveryPayInfo;
 import com.bruce.open.mortgage.Model.PayResult;
 import com.bruce.open.mortgage.R;
+import com.bruce.open.mortgage.Utils.Methods;
 import com.bruce.open.mortgage.Utils.SettingManager;
 import com.bruce.open.mortgage.adapter.MyMortgageListAdapter;
+import com.bruce.open.mortgage.customViews.DesktopTabHost;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +27,7 @@ import java.util.List;
 /**
  * Created by qizhenghao on 16/6/23.
  */
-public class MyMortgageFragment extends BaseFragment {
+public class MyMortgageFragment extends BaseFragment implements View.OnClickListener{
 
     private ListView mListView;
     private View mHeadView;
@@ -72,6 +76,8 @@ public class MyMortgageFragment extends BaseFragment {
         monthTv = (TextView) mHeadView.findViewById(R.id.result_sum_month_tv);
         everyMonthPayTv = (TextView) mHeadView.findViewById(R.id.result_every_month_payment_tv);
         mListView.addHeaderView(mHeadView);
+
+        initEmptyView((ViewGroup) mContentView, LayoutInflater.from(mActivity).inflate(R.layout.empry_view_layout, null));
     }
 
     @Override
@@ -82,8 +88,10 @@ public class MyMortgageFragment extends BaseFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (result == null)
+        if (result == null) {
+            showEmptyView();
             return;
+        }
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         loanTypeTv.setText(result.loanType);
         calculateTypeTv.setText(result.calculateType);
@@ -128,7 +136,7 @@ public class MyMortgageFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-
+        mContentView.findViewById(R.id.empty_view_btn).setOnClickListener(this);
     }
 
     @Override
@@ -138,4 +146,21 @@ public class MyMortgageFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.empty_view_btn:
+                onTabItemClickListener.onTabItemSelected(DesktopTabHost.TabType.MORTGAGE_CALCULATE, null);
+                break;
+        }
+    }
+
+    @Override
+    public void initEmptyView(ViewGroup emptyViewContainer, View emptyView) {
+        ImageView imageView = (ImageView) emptyView.findViewById(R.id.empty_view_iv);
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+        params.width = (int) (Methods.getScreenWidth() * 0.618);
+        params.height = (int) (params.width*1.4);
+        super.initEmptyView(emptyViewContainer, emptyView);
+    }
 }

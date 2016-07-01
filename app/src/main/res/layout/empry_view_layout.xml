@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/empty_view_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        android:src="@drawable/my_mortgage_no_data"/>
+
+    <Button
+        android:layout_below="@id/empty_view_iv"
+        android:id="@+id/empty_view_btn"
+        android:layout_centerHorizontal="true"
+        style="@style/common_blue_button"
+        android:layout_width="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="还没有房贷，赶紧去算算"
+        android:layout_height="40dp"/>
+</RelativeLayout>

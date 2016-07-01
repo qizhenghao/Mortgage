@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.bruce.open.mortgage.activities.MainActivity;
+import com.bruce.open.mortgage.activities.DesktopActivity;
 import com.bruce.open.mortgage.R;
 
 /**
@@ -64,10 +64,10 @@ public class BaseSpinnerAdapter extends BaseAdapter {
                 holder.contentTv.setText((position+1) + "年");
                 break;
             case BUSSINESS_RATE:
-                holder.contentTv.setText(dataArr[position]==MainActivity.NORMAL_BUSINESS_RATE?(dataArr[position] + "%, 2016.1.1基准利率"):dataArr[position] + "%");
+                holder.contentTv.setText(dataArr[position]== DesktopActivity.NORMAL_BUSINESS_RATE?(dataArr[position] + "%, 2016.1.1基准利率"):dataArr[position] + "%");
                 break;
             case HOUSING_RATE:
-                holder.contentTv.setText(dataArr[position]==MainActivity.NORMAL_HOUSING_RATE?(dataArr[position] + "%, 2016.1.1基准利率"):dataArr[position] + "%");
+                holder.contentTv.setText(dataArr[position]== DesktopActivity.NORMAL_HOUSING_RATE?(dataArr[position] + "%, 2016.1.1基准利率"):dataArr[position] + "%");
                 break;
             default:
                 break;

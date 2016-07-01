@@ -15,16 +15,17 @@ import android.widget.FrameLayout;
 import com.bruce.open.mortgage.R;
 import com.bruce.open.mortgage.Utils.SystemStatusManager;
 import com.bruce.open.mortgage.adapter.BaseFramentPagerAdapter;
-import com.bruce.open.mortgage.customViews.TabViewPagerIndicator;
+import com.bruce.open.mortgage.customViews.DesktopTabHost;
 import com.bruce.open.mortgage.fragments.BaseFragment;
 import com.bruce.open.mortgage.fragments.MortgageCalculateFragment;
 import com.bruce.open.mortgage.fragments.MyMortgageFragment;
 import com.bruce.open.mortgage.listeners.OnRefreshFragmentListener;
+import com.bruce.open.mortgage.listeners.OnTabItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRefreshFragmentListener {
+public class DesktopActivity extends AppCompatActivity implements View.OnClickListener, OnRefreshFragmentListener, OnTabItemClickListener {
 
     public static final float NORMAL_BUSINESS_RATE = 4.90f;
     public static final float NORMAL_HOUSING_RATE = 3.25f;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final float DEFAULT_YEAR = 30;
 
     private ViewPager viewPager;
-    private TabViewPagerIndicator tabViewPagerIndicator;
+    private DesktopTabHost desktopTabHost;
     private BaseFramentPagerAdapter viewPagerAdapter;
     private List<BaseFragment> fragmentList;
 
@@ -66,17 +67,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         viewPagerAdapter = new BaseFramentPagerAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(viewPagerAdapter);
-        tabViewPagerIndicator.setViewPager(viewPager);
+        desktopTabHost.setViewPager(viewPager);
         viewPager.setOffscreenPageLimit(fragmentList.size());
 
-        tabViewPagerIndicator.setCurrentItem(0);
+        desktopTabHost.setCurrentItem(0);
     }
 
     private void initViews() {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        tabViewPagerIndicator = (TabViewPagerIndicator) findViewById(R.id.tab_page_indicator);
-        tabViewPagerIndicator.setViewIds(new int[]{R.id.tab_line_layout, R.id.tab_one, R.id.tab_two});
-        delayLayout = new FrameLayout(MainActivity.this);
+        desktopTabHost = (DesktopTabHost) findViewById(R.id.tab_page_indicator);
+        desktopTabHost.setViewIds(new int[]{R.id.tab_line_layout, R.id.tab_one, R.id.tab_two});
+        delayLayout = new FrameLayout(DesktopActivity.this);
         delayLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         delayLayout.setBackgroundResource(R.drawable.welcome_bg);
         ((FrameLayout)getWindow().getDecorView()).addView(delayLayout);
@@ -156,5 +157,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onTabItemSelected(int index, Bundle args) {
+        desktopTabHost.setCurrentItem(index);
     }
 }

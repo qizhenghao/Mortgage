@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.bruce.open.mortgage.MyApplication;
 import com.bruce.open.mortgage.R;
 import com.bruce.open.mortgage.listeners.OnRefreshFragmentListener;
+import com.bruce.open.mortgage.listeners.OnTabItemClickListener;
 
 /**
  * @author qizhenghao
@@ -27,8 +30,10 @@ public abstract class BaseFragment extends Fragment {
     public Activity mActivity;
     public View mContentView;
     public OnRefreshFragmentListener onRefreshFragmentListener;
+    public OnTabItemClickListener onTabItemClickListener;
     private View progressBarLayout;
-    private ViewGroup container;
+    private ViewGroup progressContainer;
+    private View mEmptyView;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -65,12 +70,38 @@ public abstract class BaseFragment extends Fragment {
      */
     public abstract void refresh();
 
+    public void initEmptyView(ViewGroup emptyViewContainer, View emptyView) {
+        this.mEmptyView = emptyView;
+        if (emptyViewContainer instanceof RelativeLayout) {
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            emptyViewContainer.addView(mEmptyView, params);
+        } else if (emptyViewContainer instanceof FrameLayout) {
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            emptyViewContainer.addView(mEmptyView, params);
+        } else {
+            emptyViewContainer.addView(mEmptyView);
+        }
+        emptyView.setVisibility(View.GONE);
+    }
+
+    public void showEmptyView() {
+        getActivity().runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                if (mEmptyView != null)
+                    mEmptyView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mActivity = activity;
         mContext = activity;
         onRefreshFragmentListener = (OnRefreshFragmentListener) activity;
+        onTabItemClickListener = (OnTabItemClickListener) activity;
     }
 
     /**
@@ -109,7 +140,7 @@ public abstract class BaseFragment extends Fragment {
             }
         });
         progressBarLayout.setVisibility(View.GONE);
-        this.container = container;
+        this.progressContainer = container;
         container.addView(progressBarLayout);
     }
 
@@ -159,7 +190,7 @@ public abstract class BaseFragment extends Fragment {
      */
     public boolean isInitProgressBar() {
         return (progressBarLayout != null)
-                && container.findViewById(R.id.load_progressbar) != null;
+                && progressContainer.findViewById(R.id.load_progressbar) != null;
     }
 
     /**
@@ -168,8 +199,9 @@ public abstract class BaseFragment extends Fragment {
     public void deleteProgressBar() {
         if (isInitProgressBar()) {
             dismissProgressBar();
-            container.removeView(progressBarLayout);
+            progressContainer.removeView(progressBarLayout);
         }
         progressBarLayout = null;
     }
+
 }
