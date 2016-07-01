@@ -22,6 +22,7 @@ import com.bruce.open.mortgage.R;
 import com.bruce.open.mortgage.Utils.SettingManager;
 import com.bruce.open.mortgage.adapter.BaseSpinnerAdapter;
 import com.bruce.open.mortgage.customViews.CustomScrollView;
+import com.bruce.open.mortgage.customViews.DesktopTabHost;
 
 import java.text.DecimalFormat;
 
@@ -237,6 +238,7 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                     if (housingResult != null && result.loanType.contains("组合"))//贷款类型为组合
                         SettingManager.getInstance().setMyMortgageHousingResultJson(housingResult.toJSONObj().toString());
                     onRefreshFragmentListener.onRefresh(MyMortgageFragment.class);
+                    onTabItemClickListener.onTabItemSelected(DesktopTabHost.TabType.MY_MORTGAGE, null);
                 }
                 break;
         }

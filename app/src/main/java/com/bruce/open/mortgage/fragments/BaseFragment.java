@@ -95,6 +95,17 @@ public abstract class BaseFragment extends Fragment {
         });
     }
 
+    public void dismissEmptyView() {
+        getActivity().runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                if (mEmptyView != null)
+                    mEmptyView.setVisibility(View.GONE);
+            }
+        });
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

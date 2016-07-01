@@ -91,6 +91,8 @@ public class MyMortgageFragment extends BaseFragment implements View.OnClickList
         if (result == null) {
             showEmptyView();
             return;
+        } else {
+            dismissEmptyView();
         }
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         loanTypeTv.setText(result.loanType);
@@ -141,7 +143,7 @@ public class MyMortgageFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void refresh() {
-        if (pair != null && SettingManager.getInstance().version != pair.first) {
+        if (pair != null && SettingManager.getInstance().version != (int)pair.first) {
             initData();
         }
     }

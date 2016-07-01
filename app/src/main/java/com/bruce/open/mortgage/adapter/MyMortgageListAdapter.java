@@ -85,7 +85,7 @@ public class MyMortgageListAdapter extends BaseAdapter {
             holder.interestTv.setText(decimalFormat.format(infos[position].interest));
             holder.corpusTv.setText(decimalFormat.format(infos[position].corpus));
             holder.everyPayTv.setText(decimalFormat.format(infos[position].everyPay));
-            holder.leftCorpusTv.setText(decimalFormat.format(infos[position].leftCorpus));
+            holder.leftCorpusTv.setText(position+1==infos.length?"0(还完了)":decimalFormat.format(infos[position].leftCorpus));
 
             holder.dateTv.setTextColor(MyApplication.getContext().getResources().getColor(R.color.common_font_black_selector));
             holder.interestTv.setTextColor(MyApplication.getContext().getResources().getColor(R.color.common_font_black_selector));
