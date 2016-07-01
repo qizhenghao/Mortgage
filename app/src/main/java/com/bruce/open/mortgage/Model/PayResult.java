@@ -109,4 +109,19 @@ public class PayResult {
         return this;
     }
 
+    public static PayResult add(PayResult result1, PayResult result2) {
+        PayResult result = new PayResult();
+        result.monthCount = result1.monthCount;
+        result.sumLoan = result1.sumLoan + result2.sumLoan;
+        result.sumPayPrice = result1.sumPayPrice + result2.sumPayPrice;
+        result.sumInterest = result1.sumInterest + result2.sumInterest;
+        result.everyMonthPay = result1.everyMonthPay + result2.everyMonthPay;
+        if (result1.everyMonthPayArr != null) {
+            result.everyMonthPayArr = new double[result1.everyMonthPayArr.length];
+            for (int i=0;i<result.everyMonthPayArr.length;i++) {
+                result.everyMonthPayArr[i] = result1.everyMonthPayArr[i] + result2.everyMonthPayArr[i];
+            }
+        }
+        return result;
+    }
 }

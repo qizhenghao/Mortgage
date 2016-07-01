@@ -67,6 +67,8 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
     private BaseSpinnerAdapter housingRateAdapter;
 
     PayResult result = null;
+    private PayResult housingResult;
+    private PayResult bussResult;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -226,6 +228,10 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                 else {
                     result.beginTime = System.currentTimeMillis();
                     SettingManager.getInstance().setMyMortgageResultJson(result.toJSONObj().toString());
+                    if (bussResult != null && result.loanType.contains("组合"))//贷款类型为组合
+                        SettingManager.getInstance().setMyMortgageBussResultJson(bussResult.toJSONObj().toString());
+                    if (housingResult != null && result.loanType.contains("组合"))//贷款类型为组合
+                        SettingManager.getInstance().setMyMortgageHousingResultJson(housingResult.toJSONObj().toString());
                     onRefreshFragmentListener.onRefresh(MyMortgageFragment.class);
                 }
                 break;
@@ -267,7 +273,9 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                 housingRate = housingRateArr[housingRateSp.getSelectedItemPosition()]/100d;
                 PayContext combineBussContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumBussLoan, firstPay, year, bussRate) : new EqualCorpusStrategy(unitPrice, area, sumBussLoan, firstPay, year, bussRate));
                 PayContext combineHousingContext = new PayContext(payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb ? new EqualInterestStrategy(unitPrice, area, sumHousingLoan, firstPay, year, housingRate) : new EqualCorpusStrategy(unitPrice, area, sumHousingLoan, firstPay, year, housingRate));
-                result = combineBussContext.operate().add(combineHousingContext.operate());
+                bussResult = combineBussContext.operate();
+                housingResult = combineHousingContext.operate();
+                result = PayResult.add(bussResult, housingResult);
                 break;
         }
         result.loanType = "贷款类型：" + ((RadioButton) mContentView.findViewById(mortgageTypeRG.getCheckedRadioButtonId())).getText().toString();
@@ -276,6 +284,16 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
         result.housingRate = housingRate * 100d;
         result.bussRate = bussRate * 100d;
 
+        if (bussResult != null) {
+            bussResult.loanType = result.loanType;
+            bussResult.calculateType = result.calculateType;
+            bussResult.payType = result.payType;
+        }
+        if (housingResult != null) {
+            housingResult.loanType = result.loanType;
+            housingResult.calculateType = result.calculateType;
+            housingResult.payType = result.payType;
+        }
         return result;
     }
 

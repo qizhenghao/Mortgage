@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * Created by qizhenghao on 16/6/23.
@@ -91,7 +92,7 @@ public class MyMortgageFragment extends BaseFragment {
         housingRateTv.setVisibility(result.housingRate == 0 ? View.GONE : View.VISIBLE);
         bussRateTv.setText("商业利率：" + (result.bussRate == 0 ? "" : decimalFormat.format(result.bussRate) + "%"));
         bussRateTv.setVisibility(result.bussRate == 0 ? View.GONE : View.VISIBLE);
-        yearTv.setText("按揭年数：" + (result.monthCount/12) + "年");
+        yearTv.setText("按揭年数：" + (result.monthCount / 12) + "年");
 
         sumPriceTv.setText(result.sumPrice == 0 ? "0" : decimalFormat.format(result.sumPrice));
         sumLoanTv.setText(result.sumLoan == 0 ? "0" : decimalFormat.format(result.sumLoan));
@@ -100,11 +101,29 @@ public class MyMortgageFragment extends BaseFragment {
         firstPayTv.setText(result.firstPay == 0 ? "0" : decimalFormat.format(result.firstPay));
         monthTv.setText(result.monthCount == 0 ? "0" : decimalFormat.format(result.monthCount));
         everyMonthPayTv.setText(result.everyMonthPay == 0 ? "0" : decimalFormat.format(result.everyMonthPay));
+        EveryPayInfo[] infos = null;
+        int type;
+        if (result.loanType.contains("组合")) {
+            type = MyMortgageListAdapter.COMBINE_TYPE;
+            PayResult result1 = null, result2 = null;
+            Pair pair1 = SettingManager.getInstance().getMyMortgageBussResultJson();
+            Pair pair2 = SettingManager.getInstance().getMyMortgageHousingResultJson();
+            try {
+                result1 = PayResult.parse(new JSONObject((String) pair1.second));
+                result2 = PayResult.parse(new JSONObject((String) pair2.second));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            infos = EveryPayInfo.parse(result, result1, result2);
+        } else {
+            type = MyMortgageListAdapter.BUSS_TYPE|MyMortgageListAdapter.HOUSING_TYPE;
+            infos = EveryPayInfo.parse(result);
+        }
         if (mAdapter == null) {
-            mAdapter = new MyMortgageListAdapter(mContext, EveryPayInfo.parse(result));
+            mAdapter = new MyMortgageListAdapter(mContext, infos, type);
             mListView.setAdapter(mAdapter);
         } else
-            mAdapter.setData(EveryPayInfo.parse(result));
+            mAdapter.setData(infos);
     }
 
     @Override

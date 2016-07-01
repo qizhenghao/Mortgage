@@ -22,13 +22,19 @@ import java.util.Date;
  */
 public class MyMortgageListAdapter extends BaseAdapter {
 
+    public static final int COMBINE_TYPE = 4;
+    public static final int HOUSING_TYPE = 2;
+    public static final int BUSS_TYPE = 1;
+
     private Context context;
     private EveryPayInfo[] infos;
+    private int type;
     private DecimalFormat decimalFormat;
 
-    public MyMortgageListAdapter(Context context, EveryPayInfo[] infos) {
+    public MyMortgageListAdapter(Context context, EveryPayInfo[] infos, int type) {
         this.context = context;
         this.infos = infos;
+        this.type = type;
         decimalFormat = new DecimalFormat(".##");
     }
     @Override
@@ -63,8 +69,8 @@ public class MyMortgageListAdapter extends BaseAdapter {
         }
         if (position == 0) {
             holder.dateTv.setText("期次");
-            holder.interestTv.setText("本期利息");
-            holder.corpusTv.setText("本期本金");
+            holder.interestTv.setText(type==COMBINE_TYPE?"商贷还款":"本期利息");
+            holder.corpusTv.setText(type==COMBINE_TYPE?"公积金还款":"本期本金");
             holder.everyPayTv.setText("还款额");
             holder.leftCorpusTv.setText("剩余本金");
 

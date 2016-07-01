@@ -212,7 +212,7 @@ public class SettingManager {
 
     public int version;
     public void setMyMortgageResultJson(String s) {
-        sp.edit().putString("my_mortgage_result_json", s).apply();
+        sp.edit().putString("my_mortgage_result_json", s).commit();
         version++;
     }
     public Pair getMyMortgageResultJson() {
@@ -220,5 +220,22 @@ public class SettingManager {
         return pair;
     }
 
+    public void setMyMortgageBussResultJson(String s) {
+        sp.edit().putString("my_mortgage_buss_result_json", s).commit();
+        version++;
+    }
+    public Pair getMyMortgageBussResultJson() {
+        Pair pair = new Pair(version, sp.getString("my_mortgage_buss_result_json", ""));
+        return pair;
+    }
+
+    public void setMyMortgageHousingResultJson(String s) {
+        sp.edit().putString("my_mortgage_housing_result_json", s).commit();
+        version++;
+    }
+    public Pair getMyMortgageHousingResultJson() {
+        Pair pair = new Pair(version, sp.getString("my_mortgage_housing_result_json", ""));
+        return pair;
+    }
 
 }
