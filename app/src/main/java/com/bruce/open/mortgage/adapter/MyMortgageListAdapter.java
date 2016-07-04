@@ -98,8 +98,9 @@ public class MyMortgageListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setData(EveryPayInfo[] infos) {
+    public void setData(EveryPayInfo[] infos, int type) {
         this.infos = infos;
+        this.type = type;
         notifyDataSetChanged();
     }
 

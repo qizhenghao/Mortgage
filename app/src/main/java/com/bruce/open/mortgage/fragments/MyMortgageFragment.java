@@ -133,7 +133,7 @@ public class MyMortgageFragment extends BaseFragment implements View.OnClickList
             mAdapter = new MyMortgageListAdapter(mContext, infos, type);
             mListView.setAdapter(mAdapter);
         } else
-            mAdapter.setData(infos);
+            mAdapter.setData(infos, type);
     }
 
     @Override
