@@ -26,6 +26,13 @@
                 android:textColor="@color/common_font_white_selector"
                 android:textSize="16sp"/>
 
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white_pressed"/>
+
             <TextView
                 android:id="@+id/tab_two"
                 android:layout_width="match_parent"
@@ -33,6 +40,23 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/my_mortgage"
+                android:textColor="@color/common_font_white_selector"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white_pressed"/>
+
+            <TextView
+                android:id="@+id/tab_three"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/recommend"
                 android:textColor="@color/common_font_white_selector"
                 android:textSize="16sp"/>
         </LinearLayout>

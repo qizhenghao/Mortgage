@@ -19,6 +19,7 @@ import com.bruce.open.mortgage.customViews.DesktopTabHost;
 import com.bruce.open.mortgage.fragments.BaseFragment;
 import com.bruce.open.mortgage.fragments.MortgageCalculateFragment;
 import com.bruce.open.mortgage.fragments.MyMortgageFragment;
+import com.bruce.open.mortgage.fragments.RecommendFragment;
 import com.bruce.open.mortgage.listeners.OnRefreshFragmentListener;
 import com.bruce.open.mortgage.listeners.OnTabItemClickListener;
 
@@ -39,6 +40,7 @@ public class DesktopActivity extends AppCompatActivity implements View.OnClickLi
 
     private MortgageCalculateFragment mortgageCalculateFragment;
     private MyMortgageFragment myMortgageFragment;
+    private RecommendFragment recommendFragment;
     private FrameLayout delayLayout;
     private boolean isFromWelcome;
 
@@ -47,7 +49,7 @@ public class DesktopActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTranslucentStatus();
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_desktop_layout);
         initViews();
         setListener();
         initData();
@@ -61,9 +63,11 @@ public class DesktopActivity extends AppCompatActivity implements View.OnClickLi
         isFromWelcome = getIntent().getBooleanExtra("is_from_welcome", true);
         mortgageCalculateFragment = new MortgageCalculateFragment();
         myMortgageFragment = new MyMortgageFragment();
+        recommendFragment = new RecommendFragment();
         fragmentList = new ArrayList<>();
         fragmentList.add(mortgageCalculateFragment);
         fragmentList.add(myMortgageFragment);
+        fragmentList.add(recommendFragment);
 
         viewPagerAdapter = new BaseFramentPagerAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(viewPagerAdapter);
@@ -76,7 +80,7 @@ public class DesktopActivity extends AppCompatActivity implements View.OnClickLi
     private void initViews() {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         desktopTabHost = (DesktopTabHost) findViewById(R.id.tab_page_indicator);
-        desktopTabHost.setViewIds(new int[]{R.id.tab_line_layout, R.id.tab_one, R.id.tab_two});
+        desktopTabHost.setViewIds(new int[]{R.id.tab_line_layout, R.id.tab_one, R.id.tab_two, R.id.tab_three});
         delayLayout = new FrameLayout(DesktopActivity.this);
         delayLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         delayLayout.setBackgroundResource(R.drawable.welcome_bg);
@@ -152,10 +156,10 @@ public class DesktopActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(true);//不销毁activity，重新回到视野后保持原样
-            return true;
-        }
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            moveTaskToBack(true);//不销毁activity，重新回到视野后保持原样
+//            return true;
+//        }
         return super.onKeyDown(keyCode, event);
     }
 

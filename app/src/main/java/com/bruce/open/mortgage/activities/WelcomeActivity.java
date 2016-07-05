@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
+import com.baidu.mobads.AppActivity;
 import com.baidu.mobads.SplashAd;
 import com.baidu.mobads.SplashAdListener;
 import com.bruce.open.mortgage.R;
@@ -40,6 +41,9 @@ public class WelcomeActivity extends Activity {
 //                WelcomeActivity.this.finish();
 //            }
 //        }, 1500);
+
+        // 设置'广告着陆页'劢作栏癿颜色主题
+         AppActivity.setActionBarColorTheme(AppActivity.ActionBarColorTheme.ACTION_BAR_GREEN_THEME);
         RelativeLayout adsParent = (RelativeLayout) this
                 .findViewById(R.id.welcome_activity_layout);
         SplashAdListener listener = new SplashAdListener() {
