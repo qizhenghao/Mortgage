@@ -20,4 +20,15 @@ public class Methods {
 //        scaledDensity = metric.scaledDensity;
         return wm.getDefaultDisplay().getWidth();
     }
+
+
+    public static int computePixelsWithDensity(int dp) {
+        float scale;
+//        if (density!=0){
+//            scale = density;
+//        }else{
+            scale = MyApplication.getContext().getResources().getDisplayMetrics().density;
+//        }
+        return (int) (dp *scale + 0.5);
+    }
 }

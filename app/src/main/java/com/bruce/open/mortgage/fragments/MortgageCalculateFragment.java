@@ -22,6 +22,7 @@ import com.bruce.open.mortgage.R;
 import com.bruce.open.mortgage.Utils.SettingManager;
 import com.bruce.open.mortgage.adapter.BaseSpinnerAdapter;
 import com.bruce.open.mortgage.customViews.CustomScrollView;
+import com.bruce.open.mortgage.customViews.CustomTextView;
 import com.bruce.open.mortgage.customViews.DesktopTabHost;
 
 import java.text.DecimalFormat;
@@ -50,13 +51,13 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
     private Button calculateBtn;
     private Button refillBtn;
 
-    private EditText resSumPriceEdit;
-    private EditText resSumLoanEdit;
-    private EditText resSumPaymentEdit;
-    private EditText resSumInterestEdit;
-    private EditText resfirstPaymentEdit;
-    private EditText resSumMonthEdit;
-    private EditText resEveryMonthPaymentEdit;
+    private CustomTextView resSumPriceTV;
+    private CustomTextView resSumLoanTV;
+    private CustomTextView resSumPaymentTV;
+    private CustomTextView resSumInterestTV;
+    private CustomTextView resfirstPaymentTV;
+    private CustomTextView resSumMonthTV;
+    private CustomTextView resEveryMonthPaymentTV;
 
     private float[] firstPayArr = new float[10];
     private float[] yearArr = new float[30];
@@ -97,13 +98,13 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
         payTypeRG = (RadioGroup) mContentView.findViewById(R.id.repayment_type_rg);
         calculateBtn = (Button) mContentView.findViewById(R.id.calculate_btn);
         refillBtn = (Button) mContentView.findViewById(R.id.fill_again_btn);
-        resSumPriceEdit = (EditText) mContentView.findViewById(R.id.result_sum_price_edit);
-        resSumLoanEdit = (EditText) mContentView.findViewById(R.id.result_sum_loan_edit);
-        resSumPaymentEdit = (EditText) mContentView.findViewById(R.id.result_repayment_sum_price_edit);
-        resSumInterestEdit = (EditText) mContentView.findViewById(R.id.result_sum_interest_edit);
-        resfirstPaymentEdit = (EditText) mContentView.findViewById(R.id.result_fisrt_payment_price_edit);
-        resSumMonthEdit = (EditText) mContentView.findViewById(R.id.result_sum_month_edit);
-        resEveryMonthPaymentEdit = (EditText) mContentView.findViewById(R.id.result_every_month_payment_edit);
+        resSumPriceTV = (CustomTextView) mContentView.findViewById(R.id.result_sum_price_tv);
+        resSumLoanTV = (CustomTextView) mContentView.findViewById(R.id.result_sum_loan_edit);
+        resSumPaymentTV = (CustomTextView) mContentView.findViewById(R.id.result_repayment_sum_price_edit);
+        resSumInterestTV = (CustomTextView) mContentView.findViewById(R.id.result_sum_interest_edit);
+        resfirstPaymentTV = (CustomTextView) mContentView.findViewById(R.id.result_fisrt_payment_price_edit);
+        resSumMonthTV = (CustomTextView) mContentView.findViewById(R.id.result_sum_month_edit);
+        resEveryMonthPaymentTV = (CustomTextView) mContentView.findViewById(R.id.result_every_month_payment_edit);
 
         mContentView.findViewById(R.id.mortgage_type_tv).setFocusable(true);//设置不自动弹出输入法，也可以在manifest中设置
 
@@ -305,17 +306,17 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
 
     private void setResultViewData(PayResult result) {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
-        resSumPriceEdit.setText(result.sumPrice == 0 ? "0" : decimalFormat.format(result.sumPrice));
-        resSumLoanEdit.setText(result.sumLoan==0?"0":decimalFormat.format(result.sumLoan));
-        resSumPaymentEdit.setText(result.sumPayPrice==0?"0":decimalFormat.format(result.sumPayPrice));
-        resSumInterestEdit.setText(result.sumInterest==0?"0":decimalFormat.format(result.sumInterest));
-        resfirstPaymentEdit.setText(result.firstPay==0?"0":decimalFormat.format(result.firstPay));
-        resSumMonthEdit.setText(result.monthCount==0?"0":decimalFormat.format(result.monthCount));
+        resSumPriceTV.setText(result.sumPrice == 0 ? "0" : decimalFormat.format(result.sumPrice));
+        resSumLoanTV.setText(result.sumLoan == 0 ? "0" : decimalFormat.format(result.sumLoan));
+        resSumPaymentTV.setText(result.sumPayPrice == 0 ? "0" : decimalFormat.format(result.sumPayPrice));
+        resSumInterestTV.setText(result.sumInterest == 0 ? "0" : decimalFormat.format(result.sumInterest));
+        resfirstPaymentTV.setText(result.firstPay == 0 ? "0" : decimalFormat.format(result.firstPay));
+        resSumMonthTV.setText(result.monthCount == 0 ? "0" : decimalFormat.format(result.monthCount));
         if (payTypeRG.getCheckedRadioButtonId() == R.id.repayment_type_interest_rb) {
-            resEveryMonthPaymentEdit.setText(result.everyMonthPay==0?"0":decimalFormat.format(result.everyMonthPay));
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentEdit.getLayoutParams();
+            resEveryMonthPaymentTV.setText(result.everyMonthPay == 0 ? "0" : decimalFormat.format(result.everyMonthPay));
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentTV.getLayoutParams();
             params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-            resEveryMonthPaymentEdit.setLayoutParams(params);
+            resEveryMonthPaymentTV.setLayoutParams(params);
             CustomScrollView.IS_INTERCEPT = false;
         } else {
             CustomScrollView.IS_INTERCEPT = true;
@@ -323,10 +324,10 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
             for (int i = 0; i < result.everyMonthPayArr.length; i++) {
                 sb.append("第" + (i+1) + "月，" + decimalFormat.format(result.everyMonthPayArr[i]) + "\n");
             }
-            resEveryMonthPaymentEdit.setText(sb.toString());
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentEdit.getLayoutParams();
+            resEveryMonthPaymentTV.setText(sb.toString());
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentTV.getLayoutParams();
             params.height = 600;
-            resEveryMonthPaymentEdit.setLayoutParams(params);
+            resEveryMonthPaymentTV.setLayoutParams(params);
         }
     }
 

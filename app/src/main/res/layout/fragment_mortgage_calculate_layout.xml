@@ -1,13 +1,15 @@
-<com.bruce.open.mortgage.customViews.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                      xmlns:tools="http://schemas.android.com/tools"
-                                                      android:layout_width="match_parent"
-                                                      android:layout_height="match_parent"
-                                                      android:id="@+id/mortgage_calculate_sv"
-                                                      android:contextClickable="true"
-                                                      android:paddingBottom="@dimen/activity_vertical_margin"
-                                                      android:paddingLeft="@dimen/activity_horizontal_margin"
-                                                      android:paddingRight="@dimen/activity_horizontal_margin"
-                                                      tools:context=".MainActivity">
+<com.bruce.open.mortgage.customViews.CustomScrollView
+    android:id="@+id/mortgage_calculate_sv"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contextClickable="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -441,8 +443,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
@@ -452,12 +453,11 @@
                     android:text="房款总额："
                     android:textStyle="bold"/>
 
-                <EditText
-                    android:id="@+id/result_sum_price_edit"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:gravity="center"/>
+                <com.bruce.open.mortgage.customViews.CustomTextView
+                    android:id="@+id/result_sum_price_tv"
+                    style="@style/mortgage_calculate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -468,8 +468,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
@@ -479,12 +478,11 @@
                     android:text="贷款总额："
                     android:textStyle="bold"/>
 
-                <EditText
+                <com.bruce.open.mortgage.customViews.CustomTextView
                     android:id="@+id/result_sum_loan_edit"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:gravity="center"/>
+                    style="@style/mortgage_calculate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -495,8 +493,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
@@ -506,12 +503,11 @@
                     android:text="还款总额："
                     android:textStyle="bold"/>
 
-                <EditText
+                <com.bruce.open.mortgage.customViews.CustomTextView
                     android:id="@+id/result_repayment_sum_price_edit"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:gravity="center"/>
+                    style="@style/mortgage_calculate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -522,8 +518,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
@@ -533,12 +528,11 @@
                     android:text="支付利息："
                     android:textStyle="bold"/>
 
-                <EditText
+                <com.bruce.open.mortgage.customViews.CustomTextView
                     android:id="@+id/result_sum_interest_edit"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:gravity="center"/>
+                    style="@style/mortgage_calculate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -549,8 +543,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
@@ -560,12 +553,11 @@
                     android:text="首期付款："
                     android:textStyle="bold"/>
 
-                <EditText
+                <com.bruce.open.mortgage.customViews.CustomTextView
                     android:id="@+id/result_fisrt_payment_price_edit"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:gravity="center"/>
+                    style="@style/mortgage_calculate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -576,8 +568,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
@@ -587,12 +578,11 @@
                     android:text="贷款月数："
                     android:textStyle="bold"/>
 
-                <EditText
+                <com.bruce.open.mortgage.customViews.CustomTextView
                     android:id="@+id/result_sum_month_edit"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:gravity="center"/>
+                    style="@style/mortgage_calculate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -604,8 +594,7 @@
                 android:id="@+id/equal_interest_every_month_pay_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
@@ -615,12 +604,11 @@
                     android:text="每月还款："
                     android:textStyle="bold"/>
 
-                <EditText
+                <com.bruce.open.mortgage.customViews.CustomTextView
                     android:id="@+id/result_every_month_payment_edit"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:editable="false"
-                    android:gravity="center"/>
+                    style="@style/mortgage_calculate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -645,8 +633,8 @@
                 android:id="@+id/mortgage_calculate_save_result_btn"
                 style="@style/common_blue_button"
                 android:layout_width="match_parent"
-                android:text="保存到我的房贷"
-                android:layout_height="@dimen/common_button_height_big"/>
+                android:layout_height="@dimen/common_button_height_big"
+                android:text="保存到我的房贷"/>
         </LinearLayout>
     </LinearLayout>
 </com.bruce.open.mortgage.customViews.CustomScrollView>
