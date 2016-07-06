@@ -19,6 +19,7 @@ import com.bruce.open.mortgage.IPayStrategy.EqualInterestStrategy;
 import com.bruce.open.mortgage.IPayStrategy.PayContext;
 import com.bruce.open.mortgage.Model.PayResult;
 import com.bruce.open.mortgage.R;
+import com.bruce.open.mortgage.Utils.Methods;
 import com.bruce.open.mortgage.Utils.SettingManager;
 import com.bruce.open.mortgage.adapter.BaseSpinnerAdapter;
 import com.bruce.open.mortgage.customViews.CustomScrollView;
@@ -213,9 +214,11 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                setResultViewData(payResult);
-                                scrollView.fullScroll(View.FOCUS_DOWN);
                                 dismissProgressBar();
+                                if (payResult != null) {
+                                    setResultViewData(payResult);
+                                    scrollView.fullScroll(View.FOCUS_DOWN);
+                                }
                             }
                         });
                     }
@@ -252,17 +255,33 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
             sumBussLoan = getLoanFromEdit(sumBussLoanEdit);
             sumHousingLoan = getLoanFromEdit(sumHousingLoanEdit);
         } else {
-            if (calculateTypeRG.getCheckedRadioButtonId() == R.id.calculate_type_sum_mortgage_rb) {
-                sumLoan = getLoanFromEdit(sumLoanEdit);
-            } else {
-                unitPrice = Double.parseDouble("".equals(unitPriceEdit.getText().toString().trim())?"0":unitPriceEdit.getText().toString().trim());
-                area = Double.parseDouble("".equals(areaEdit.getText().toString().trim())?"0": areaEdit.getText().toString().trim());
+            switch (calculateTypeRG.getCheckedRadioButtonId()) {
+                case R.id.calculate_type_sum_mortgage_rb:
+                    sumLoan = getLoanFromEdit(sumLoanEdit);
+                    break;
+                case R.id.calculate_type_unit_price_rb:
+                    unitPrice = Double.parseDouble("".equals(unitPriceEdit.getText().toString().trim())?"0":unitPriceEdit.getText().toString().trim());
+                    area = Double.parseDouble("".equals(areaEdit.getText().toString().trim())?"0": areaEdit.getText().toString().trim());
+                    break;
+                default:
+                    Methods.showToast("请选择计算方式", false);
+                    return null;
             }
         }
 
         double firstPay = firstPaySp.getSelectedItemPosition()/10d;
 
         int year = yearSp.getSelectedItemPosition()+1;
+
+        switch (payTypeRG.getCheckedRadioButtonId()) {
+            case R.id.repayment_type_interest_rb:
+                break;
+            case R.id.repayment_type_corpus_rb:
+                break;
+            default:
+                Methods.showToast("请选择还款方式", false);
+                return null;
+        }
 
         switch (mortgageTypeRG.getCheckedRadioButtonId()) {
             case R.id.mortgage_type_business_rb:
@@ -284,6 +303,9 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
                 housingResult = combineHousingContext.operate();
                 result = PayResult.add(bussResult, housingResult);
                 break;
+            default:
+                Methods.showToast("请选择贷款类型", false);
+                return null;
         }
         result.loanType = "贷款类型：" + ((RadioButton) mContentView.findViewById(mortgageTypeRG.getCheckedRadioButtonId())).getText().toString();
         result.calculateType = "计算方式：" + ((RadioButton) mContentView.findViewById(calculateTypeRG.getCheckedRadioButtonId())).getText().toString();
@@ -326,16 +348,14 @@ public class MortgageCalculateFragment extends BaseFragment implements View.OnCl
             }
             resEveryMonthPaymentTV.setText(sb.toString());
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) resEveryMonthPaymentTV.getLayoutParams();
-            params.height = 600;
+            params.height = Methods.computePixelsWithDensity(150);
             resEveryMonthPaymentTV.setLayoutParams(params);
         }
     }
 
     private double getLoanFromEdit(EditText edit) {
         double loan = Double.parseDouble("".equals(edit.getText().toString().trim()) ? "0" : edit.getText().toString().trim());
-        if (loan < 1) {
-            Toast.makeText(mContext, "贷款总额不能小于1万", Toast.LENGTH_SHORT).show();
-        }
+        if (loan < 1) Methods.showToast("贷款总额不能小于1万", false);
         return loan*10000;
     }
 
